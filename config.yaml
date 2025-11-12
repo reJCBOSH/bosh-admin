@@ -1,0 +1,61 @@
+server:
+  env: dev
+  name: bosh-admin
+  url: 127.0.0.1
+  port: 8089
+  database: mysql
+  ossType: "local"
+  blackJWT: false
+
+log:
+  rootDir: ./logs
+  format: json
+  timestampFormat: '2006-01-02 15:04:05.000'
+  maxBackups: 3
+  maxSize: 500
+  maxAge: 30
+  compress: true
+
+mysql:
+  username: root
+  password: 123456ljc
+  ip: 127.0.0.1
+  port: 3306
+  database: 'bosh-admin'
+  config: charset=utf8mb4&parseTime=True&loc=Local
+  maxIdleConns: 10
+  maxOpenConns: 100
+
+pgsql:
+  host: 127.0.0.1
+  user: postgres
+  password: 123456LJC
+  dbname: bosh-admin
+  port: 5432
+  config: 'sslmode=disable TimeZone=Asia/Shanghai'
+  maxIdleConns: 10
+  maxOpenConns: 100
+
+jwt:
+  accessSecret: 59ce1c6ba62f1459581d7d01c4c04c52
+  refreshSecret: 23d6e2be089bed49550f30814e08ad60
+  accessDuration: 3600
+  refreshDuration: 86400
+  bufferDuration: 300
+
+captcha:
+  keyLong: 6
+  imgWidth: 240
+  imgHeight: 80
+
+local:
+  path: "static"
+  storePath : "static"
+
+aliyunOss:
+  endpoint: yourEndpoint
+  accessKeyId: yourAccessKeyId
+  accessKeySecret: yourAccessKeySecret
+  bucketName: yourBucketName
+  bucketUrl: yourBucketUrl
+  basePath: yourBasePath

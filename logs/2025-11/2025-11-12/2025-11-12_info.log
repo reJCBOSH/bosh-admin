@@ -1,0 +1,21 @@
+{"L":"INFO","T":"2025-11-12 10:11:48.469","C":"initializer/db.go:21","F":"bosh-admin/initializer.InitDB","M":"数据库连接成功"}
+{"L":"INFO","T":"2025-11-12 10:11:48.573","C":"initializer/db.go:27","F":"bosh-admin/initializer.InitDB","M":"数据库迁移成功"}
+{"L":"INFO","T":"2025-11-12 10:11:48.607","C":"initializer/websocket.go:13","F":"bosh-admin/initializer.InitWebsocket","M":"websocket初始化完成"}
+{"L":"INFO","T":"2025-11-12 10:11:48.609","C":"initializer/engine.go:28","F":"bosh-admin/initializer.InitEngine","M":"路由注册完成"}
+{"L":"INFO","T":"2025-11-12 10:11:48.609","C":"main.go:50","F":"main.main","M":"服务已启动：%s:8089"}
+{"L":"INFO","T":"2025-11-12 10:24:46.106","C":"main.go:67","F":"main.main","M":"关闭服务中..."}
+{"L":"INFO","T":"2025-11-12 10:24:46.127","C":"main.go:76","F":"main.main","M":"服务已退出"}
+{"L":"INFO","T":"2025-11-12 10:24:55.810","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"数据库连接成功"}
+{"L":"INFO","T":"2025-11-12 10:24:55.905","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"数据库迁移成功"}
+{"L":"INFO","T":"2025-11-12 10:24:55.928","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"websocket初始化完成"}
+{"L":"INFO","T":"2025-11-12 10:24:55.929","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"路由注册完成"}
+{"L":"INFO","T":"2025-11-12 10:24:55.929","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"服务已启动: :8089"}
+{"L":"INFO","T":"2025-11-12 10:29:51.308","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"关闭服务中..."}
+{"L":"INFO","T":"2025-11-12 10:29:51.316","C":"core/log/extend.go:12","F":"bosh-admin/core/log.Info","M":"服务已退出"}
+{"L":"INFO","T":"2025-11-12 10:29:57.122","C":"initializer/db.go:21","F":"bosh-admin/initializer.InitDB","M":"数据库连接成功"}
+{"L":"INFO","T":"2025-11-12 10:29:57.216","C":"initializer/db.go:27","F":"bosh-admin/initializer.InitDB","M":"数据库迁移成功"}
+{"L":"INFO","T":"2025-11-12 10:29:57.237","C":"initializer/websocket.go:13","F":"bosh-admin/initializer.InitWebsocket","M":"websocket初始化完成"}
+{"L":"INFO","T":"2025-11-12 10:29:57.238","C":"initializer/engine.go:28","F":"bosh-admin/initializer.InitEngine","M":"路由注册完成"}
+{"L":"INFO","T":"2025-11-12 10:29:57.238","C":"main.go:50","F":"main.main","M":"服务已启动:8089"}
+{"L":"INFO","T":"2025-11-12 15:16:39.151","C":"main.go:67","F":"main.main","M":"关闭服务中..."}
+{"L":"INFO","T":"2025-11-12 15:16:39.178","C":"main.go:76","F":"main.main","M":"服务已退出"}
