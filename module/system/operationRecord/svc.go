@@ -26,8 +26,8 @@ func (svc *SysOperationRecordSvc) GetOperationRecordList(username, method, path,
 	if path != "" {
 		query = query.Where("path LIKE ?", "%"+path+"%")
 	}
-	if requestIp != "" {
-		query = query.Where("request_ip LIKE ?", "%"+requestIp+"%")
+	if requestIP != "" {
+		query = query.Where("request_ip LIKE ?", "%"+requestIP+"%")
 	}
 	if status != 0 {
 		query = query.Where("status = ?", status)

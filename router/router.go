@@ -1,14 +1,12 @@
 package router
 
 import (
-	"bosh-admin/middleware"
-	"bosh-admin/module/auth"
-	"bosh-admin/module/basic"
 	"net/http"
 
 	"bosh-admin/core/ctx"
 	"bosh-admin/global"
-	"bosh-admin/module/system"
+	"bosh-admin/middleware"
+	"bosh-admin/router/system"
 
 	"github.com/gin-gonic/gin"
 )
@@ -40,13 +38,13 @@ func SetApiRouter(engine *gin.Engine) {
 
 	public := group.Group("")
 	{
-		auth.SetApiRouter(public)
-		basic.SetApiRouter(public)
+		SetAuthApiRouter(public)
+		SetBasicApiRouter(public)
 	}
 
 	private := group.Group("", middleware.JWTApiAuth())
 	{
-		system.SetApiRouter(private)
+		system.SetSystemApiRouter(private)
 	}
 }
 
