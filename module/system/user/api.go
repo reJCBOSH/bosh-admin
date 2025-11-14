@@ -28,7 +28,25 @@ func (h *SysUserApi) GetUserList(c *ctx.Context) {
 	if c.HandlerError(err) {
 		return
 	}
-	c.SuccessWithList(list, total)
+	var listData []UserListItem
+	for _, user := range list {
+		listData = append(listData, UserListItem{
+			Id:       user.Id,
+			Username: user.Username,
+			Avatar:   user.Avatar,
+			Nickname: user.Nickname,
+			Gender:   user.Gender,
+			Status:   user.Status,
+			RoleId:   user.RoleId,
+			DeptId:   user.DeptId,
+			RoleName: user.Role.RoleName,
+			RoleCode: user.Role.RoleCode,
+			DeptName: user.Dept.DeptName,
+			DeptCode: user.Dept.DeptCode,
+			Remark:   user.Remark,
+		})
+	}
+	c.SuccessWithList(listData, total)
 }
 
 func (h *SysUserApi) GetUserInfo(c *ctx.Context) {
@@ -37,7 +55,22 @@ func (h *SysUserApi) GetUserInfo(c *ctx.Context) {
 	if c.HandlerError(err) {
 		return
 	}
-	c.SuccessWithData(info)
+	var data = UserListItem{
+		Id:       info.Id,
+		Username: info.Username,
+		Avatar:   info.Avatar,
+		Nickname: info.Nickname,
+		Gender:   info.Gender,
+		Status:   info.Status,
+		RoleId:   info.RoleId,
+		DeptId:   info.DeptId,
+		RoleName: info.Role.RoleName,
+		RoleCode: info.Role.RoleCode,
+		DeptName: info.Dept.DeptName,
+		DeptCode: info.Dept.DeptCode,
+		Remark:   info.Remark,
+	}
+	c.SuccessWithData(data)
 }
 
 func (h *SysUserApi) AddUser(c *ctx.Context) {
