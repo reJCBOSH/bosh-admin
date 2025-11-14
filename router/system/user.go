@@ -16,6 +16,7 @@ func SetUserApiRouter(router *gin.RouterGroup) {
 	{
 		group.GET("/list", ctx.Handler(handler.GetUserList))
 		group.GET("/info", ctx.Handler(handler.GetUserInfo))
+		group.GET("/getSelfInfo", ctx.Handler(handler.GetSelfInfo))
 	}
 	{
 		groupRecord.POST("/add", ctx.Handler(handler.AddUser))

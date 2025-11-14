@@ -108,6 +108,26 @@ func (h *SysUserApi) SetUserStatus(c *ctx.Context) {
 	c.Success()
 }
 
+func (h *SysUserApi) GetSelfInfo(c *ctx.Context) {
+	userClaims := h.jwtSvc.GetUserClaims(c)
+	info, err := h.svc.GetUserById(userClaims.UserId)
+	if c.HandlerError(err) {
+		return
+	}
+	c.SuccessWithData(SelfInfo{
+		UserId:       info.Id,
+		Username:     info.Username,
+		Avatar:       info.Avatar,
+		Nickname:     info.Nickname,
+		Gender:       info.Gender,
+		Birthday:     info.Birthday.String(),
+		Email:        info.Email,
+		Mobile:       info.Mobile,
+		Introduce:    info.Introduce,
+		PwdUpdatedAt: info.PwdUpdatedAt.String(),
+	})
+}
+
 func (h *SysUserApi) EditSelfInfo(c *ctx.Context) {
 	var req EditSelfInfoReq
 	msg, err := c.ValidateParams(&req)

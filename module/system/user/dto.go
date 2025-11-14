@@ -73,15 +73,16 @@ type SetUserStatusReq struct {
 }
 
 type SelfInfo struct {
-	Id        uint   `json:"id"`
-	Username  string `json:"username"`
-	Avatar    string `json:"avatar"`
-	Nickname  string `json:"nickname"`
-	Gender    int    `json:"gender"`
-	Birthday  string `json:"birthday"`
-	Email     string `json:"email"`
-	Mobile    string `json:"mobile"`
-	Introduce string `json:"introduce"`
+	UserId       uint   `json:"userId"`
+	Username     string `json:"username"`
+	Avatar       string `json:"avatar"`
+	Nickname     string `json:"nickname"`
+	Gender       int    `json:"gender"`
+	Birthday     string `json:"birthday"`
+	Email        string `json:"email"`
+	Mobile       string `json:"mobile"`
+	Introduce    string `json:"introduce"`
+	PwdUpdatedAt string `json:"pwdUpdatedAt"`
 }
 
 type EditSelfInfoReq struct {
