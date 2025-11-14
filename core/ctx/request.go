@@ -2,7 +2,6 @@ package ctx
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 
 	"bosh-admin/global"
@@ -33,7 +32,7 @@ func (c *Context) ValidateParams(req any) (string, error) {
 		for _, v := range errsMap {
 			errsArr = append(errsArr, v)
 		}
-		return fmt.Sprintf("%s:%s", ParamsError, strings.Join(errsArr, ",")), errors.New(ParamsError)
+		return ParamsError, errors.New(strings.Join(errsArr, ";"))
 	}
 	return "", nil
 }
