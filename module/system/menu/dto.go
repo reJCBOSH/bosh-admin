@@ -66,14 +66,14 @@ type ArtMenu struct {
 type ArtMenuMeta struct {
 	Title         string        `json:"title"`                   // 菜单名称
 	Icon          string        `json:"icon,omitempty"`          // 菜单图标
-	ShowBadge     bool          `json:"showBadge"`               // 是否显示徽章
+	ShowBadge     bool          `json:"showBadge,omitempty"`     // 是否显示徽章
 	ShowTextBadge string        `json:"showTextBadge,omitempty"` // 文本徽章
-	IsHide        bool          `json:"isHide"`                  // 是否在菜单中隐藏
-	IsHideTab     bool          `json:"isHideTab"`               // 是否在标签页中隐藏
+	IsHide        bool          `json:"isHide,omitempty"`        // 是否在菜单中隐藏
+	IsHideTab     bool          `json:"isHideTab,omitempty"`     // 是否在标签页中隐藏
 	Link          string        `json:"link,omitempty"`          // 外部链接
-	IsIframe      bool          `json:"isIframe"`                // 是否为iframe
-	KeepAlive     bool          `json:"keepAlive"`               // 是否缓存
-	FixedTab      bool          `json:"fixedTab"`                // 是否固定标签页
+	IsIframe      bool          `json:"isIframe,omitempty"`      // 是否为iframe
+	KeepAlive     bool          `json:"keepAlive,omitempty"`     // 是否缓存
+	FixedTab      bool          `json:"fixedTab,omitempty"`      // 是否固定标签页
 	AuthList      []ArtAuthItem `json:"authList"`                // 操作权限
 }
 
