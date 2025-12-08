@@ -23,6 +23,9 @@ func IsDev() bool {
 
 // IP2Region IP转地理位置
 func IP2Region(ip string) string {
+	if ip == "::1" {
+		return "本地"
+	}
 	result, err := global.XdbSearcher.SearchByStr(ip)
 	if err != nil {
 		log.Error("查询IP地理信息失败:", err)
