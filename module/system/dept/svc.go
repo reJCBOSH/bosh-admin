@@ -73,7 +73,7 @@ func (svc *SysDeptSvc) GetDeptList(deptName, deptCode string, status *int, pageN
 		if err != nil {
 			return nil, 0, exception.NewException("查询部门数量失败", err)
 		}
-		query = query.Scopes(db.PageScope(pageSize, pageNo))
+		query = query.Scopes(db.PageScope(pageNo, pageSize))
 	}
 	err = query.Order("display_order DESC").Find(&list).Error
 	if err != nil {

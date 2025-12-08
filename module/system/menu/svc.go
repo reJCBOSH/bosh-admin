@@ -54,7 +54,7 @@ func (svc *SysMenuSvc) GetMenuList(title string, pageNo, pageSize int) ([]model.
 		if err = query.Count(&total).Error; err != nil {
 			return nil, 0, exception.NewException("查询菜单数量失败", err)
 		}
-		query = query.Scopes(db.PageScope(pageSize, pageNo))
+		query = query.Scopes(db.PageScope(pageNo, pageSize))
 	}
 	err = query.Find(&list).Error
 	if err != nil {
