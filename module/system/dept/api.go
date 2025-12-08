@@ -76,12 +76,12 @@ func (h *SysDeptApi) EditDept(c *ctx.Context) {
 }
 
 func (h *SysDeptApi) DelDept(c *ctx.Context) {
-	var req basic.IdsReq
+	var req basic.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
 	}
-	err = h.svc.DelDept(req.Ids)
+	err = h.svc.DelDept(req.Id)
 	if c.HandlerError(err) {
 		return
 	}
