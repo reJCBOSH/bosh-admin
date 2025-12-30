@@ -1,12 +1,13 @@
 package auth
 
 import (
+	"fmt"
+
 	"bosh-admin/core/ctx"
 	"bosh-admin/core/db"
 	"bosh-admin/core/exception"
 	"bosh-admin/model"
 	"bosh-admin/util"
-	"fmt"
 )
 
 type AuthSvc struct{}

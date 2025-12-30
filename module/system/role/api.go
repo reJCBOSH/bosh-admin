@@ -3,7 +3,6 @@ package role
 import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/module/auth"
-	"bosh-admin/module/basic"
 )
 
 type SysRoleApi struct {
@@ -32,7 +31,7 @@ func (h *SysRoleApi) GetRoleList(c *ctx.Context) {
 }
 
 func (h *SysRoleApi) GetRoleInfo(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	info, err := h.svc.GetRoleById(req.Id)
 	if c.HandlerError(err) {
 		return
@@ -67,7 +66,7 @@ func (h *SysRoleApi) EditRole(c *ctx.Context) {
 }
 
 func (h *SysRoleApi) DelRole(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -80,7 +79,7 @@ func (h *SysRoleApi) DelRole(c *ctx.Context) {
 }
 
 func (h *SysRoleApi) GetRoleMenu(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -93,7 +92,7 @@ func (h *SysRoleApi) GetRoleMenu(c *ctx.Context) {
 }
 
 func (h *SysRoleApi) GetRoleMenuIds(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -119,7 +118,7 @@ func (h *SysRoleApi) SetRoleMenuAuth(c *ctx.Context) {
 }
 
 func (h *SysRoleApi) GetRoleDeptIds(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -152,8 +151,8 @@ func (h *SysRoleApi) SetRoleStatus(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userCliams := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.SetRoleStatus(userCliams.RoleId, req.RoleId, req.Status)
+	userClaims := h.jwtSvc.GetUserClaims(c)
+	err = h.svc.SetRoleStatus(userClaims.RoleId, req.RoleId, req.Status)
 	if c.HandlerError(err) {
 		return
 	}

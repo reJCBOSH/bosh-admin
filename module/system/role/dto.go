@@ -1,12 +1,12 @@
 package role
 
 import (
+	"bosh-admin/core/ctx"
 	"bosh-admin/core/db"
-	"bosh-admin/module/basic"
 )
 
 type GetRoleListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	RoleName string `json:"roleName" form:"roleName"`
 	RoleCode string `json:"roleCode" form:"roleCode"`
 	Status   *int   `json:"status" form:"status" validate:"omitempty,oneof=0 1"`

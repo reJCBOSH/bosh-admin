@@ -1,9 +1,11 @@
 package loginRecord
 
-import "bosh-admin/module/basic"
+import (
+	"bosh-admin/core/ctx"
+)
 
 type GetLoginRecordListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	Username  string `json:"username" form:"username"`
 	StartTime string `json:"startTime" form:"startTime"`
 	EndTime   string `json:"endTime" form:"endTime"`

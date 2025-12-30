@@ -51,7 +51,7 @@ func (svc *SysRoleSvc) GetRoleById(id any) (*model.SysRole, error) {
 
 func (svc *SysRoleSvc) AddRole(role AddRoleReq) error {
 	var count int64
-	err := db.GormDB().Where("role_code = ?", role.RoleCode).Count(&count).Error
+	err := db.GormDB().Model(&model.SysRole{}).Where("role_code = ?", role.RoleCode).Count(&count).Error
 	if err != nil {
 		return exception.NewException("查询角色失败", err)
 	}
@@ -117,17 +117,12 @@ func (svc *SysRoleSvc) DelRole(id any) error {
 }
 
 func (svc *SysRoleSvc) GetRoleMenu(roleId any) ([]model.SysMenu, error) {
-	role, err := db.QueryById[model.SysRole](roleId)
+	_, err := db.QueryById[model.SysRole](roleId)
 	if err != nil {
 		return nil, exception.NewException("查询角色失败", err)
 	}
-	var menuIds []uint
-	err = db.GormDB().Model(&model.SysRoleMenu{}).Where("role_id = ?", role.Id).Pluck("menu_id", &menuIds).Error
-	if err != nil {
-		return nil, exception.NewException("查询角色菜单失败", err)
-	}
 	var menus []model.SysMenu
-	err = db.GormDB().Model(&model.SysMenu{}).Where("id IN ?", menuIds).Order("display_order DESC,id ASC").Find(&menus).Error
+	err = db.GormDB().Model(&model.SysMenu{}).Order("display_order DESC,id ASC").Find(&menus).Error
 	if err != nil {
 		return nil, exception.NewException("查询角色菜单失败", err)
 	}

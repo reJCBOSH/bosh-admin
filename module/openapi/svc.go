@@ -13,12 +13,12 @@ import (
 	"gorm.io/gorm"
 )
 
-type OpenAPISvc struct {
+type OpenapiSvc struct {
 	db *gorm.DB
 }
 
-func NewOpenAPISvc() *OpenAPISvc {
-	return &OpenAPISvc{
+func NewOpenAPISvc() *OpenapiSvc {
+	return &OpenapiSvc{
 		db: global.GormDB,
 	}
 }
@@ -31,7 +31,7 @@ type AppKeyInfo struct {
 }
 
 // GetAppKeyInfo 获取应用密钥信息
-func (svc *OpenAPISvc) GetAppKeyInfo(appKey string) (*AppKeyInfo, error) {
+func (svc *OpenapiSvc) GetAppKeyInfo(appKey string) (*AppKeyInfo, error) {
 	var appKeyModel model.SysAppKey
 	err := svc.db.Where("app_key = ? AND status = 1", appKey).First(&appKeyModel).Error
 	if err != nil {
@@ -54,7 +54,7 @@ func (svc *OpenAPISvc) GetAppKeyInfo(appKey string) (*AppKeyInfo, error) {
 }
 
 // GenerateSignature 生成签名
-func (svc *OpenAPISvc) GenerateSignature(secretKey string, timestamp, nonce string, body string) string {
+func (svc *OpenapiSvc) GenerateSignature(secretKey string, timestamp, nonce string, body string) string {
 	// 按照规则拼接签名字符串
 	signStr := timestamp + "\n" + nonce + "\n" + body
 	// 使用HMAC-SHA256算法生成签名
@@ -64,7 +64,7 @@ func (svc *OpenAPISvc) GenerateSignature(secretKey string, timestamp, nonce stri
 }
 
 // VerifySignature 验证签名
-func (svc *OpenAPISvc) VerifySignature(appKey, timestamp, nonce, body, signature string) error {
+func (svc *OpenapiSvc) VerifySignature(appKey, timestamp, nonce, body, signature string) error {
 	// 获取应用密钥信息
 	appKeyInfo, err := svc.GetAppKeyInfo(appKey)
 	if err != nil {
@@ -83,7 +83,7 @@ func (svc *OpenAPISvc) VerifySignature(appKey, timestamp, nonce, body, signature
 }
 
 // CheckAppPermission 检查应用权限
-func (svc *OpenAPISvc) CheckAppPermission(appId, module, apiPath, method string) error {
+func (svc *OpenapiSvc) CheckAppPermission(appId, module, apiPath, method string) error {
 	// 检查是否存在对应的权限记录
 	var count int64
 	err := svc.db.Model(&model.SysAppPerm{}).
@@ -103,7 +103,7 @@ func (svc *OpenAPISvc) CheckAppPermission(appId, module, apiPath, method string)
 }
 
 // GetAppPermissions 获取应用所有权限
-func (svc *OpenAPISvc) GetAppPermissions(appId string) ([]model.SysAppPerm, error) {
+func (svc *OpenapiSvc) GetAppPermissions(appId string) ([]model.SysAppPerm, error) {
 	var permissions []model.SysAppPerm
 	err := svc.db.Where("app_id = ? AND status = 1", appId).Find(&permissions).Error
 	return permissions, err

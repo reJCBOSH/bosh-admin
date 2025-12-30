@@ -1,0 +1,27 @@
+# 忽略.git目录
+.git
+
+# 忽略所有隐藏文件
+.*
+
+# 但保留.git目录以外的内容
+!.gitignore
+
+# 忽略日志文件
+logs/
+
+# 忽略临时文件
+tmp/
+temp/
+
+# 忽略IDE相关文件
+.vscode/
+.idea/
+
+# 忽略编译生成的可执行文件
+*.exe
+*.dll
+*.so
+
+# 忽略vendor目录（如果使用go modules则不需要）
+vendor/

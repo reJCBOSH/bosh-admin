@@ -224,7 +224,6 @@ func (svc *SysMenuSvc) GetAsyncRoutes(roleId uint, roleCode string) ([]ArtMenu, 
 			ParentId:  menu.ParentId,
 			Path:      menu.Path,
 			Name:      menu.Name,
-			Redirect:  menu.Redirect,
 			Component: menu.Component,
 			Meta: ArtMenuMeta{
 				Title:         menu.Title,

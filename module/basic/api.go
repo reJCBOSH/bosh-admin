@@ -4,7 +4,6 @@ import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/core/log"
 	"bosh-admin/global"
-	"bosh-admin/module/auth"
 	"bosh-admin/util"
 
 	"github.com/mojocn/base64Captcha"
@@ -12,13 +11,11 @@ import (
 
 type BasicApi struct {
 	svc    *BasicSvc
-	jwtSvc *auth.JWTSvc
 }
 
 func NewBasicApi() *BasicApi {
 	return &BasicApi{
 		svc:    NewBasicSvc(),
-		jwtSvc: auth.NewJWTSvc(),
 	}
 }
 

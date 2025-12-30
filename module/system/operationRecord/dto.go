@@ -1,9 +1,11 @@
 package operationRecord
 
-import "bosh-admin/module/basic"
+import (
+	"bosh-admin/core/ctx"
+)
 
 type GetOperationRecordListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	Username  string `json:"username" form:"username"`
 	Method    string `json:"method" form:"method"`
 	Path      string `json:"path" form:"path"`

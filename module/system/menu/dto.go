@@ -1,19 +1,18 @@
 package menu
 
 import (
+	"bosh-admin/core/ctx"
 	"bosh-admin/core/db"
-	"bosh-admin/module/basic"
 )
 
 type GetMenuListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	Title string `json:"title" form:"title"`
 }
 
 type MenuBasicItem struct {
 	Path          string `json:"path" form:"path" validate:"required_if=MenuType 0|required_if=MenuType 1|required_if=MenuType 2"` // 路由路径
 	Name          string `json:"name" form:"name" validate:"required_if=MenuType 0|required_if=MenuType 1|required_if=MenuType 2"` // 路由名称(必须保持唯一)
-	Redirect      string `json:"redirect" form:"redirect"`                                                                         // 路由重定向
 	Component     string `json:"component" form:"component"`                                                                       // 按需加载需要展示的页面
 	ParentId      uint   `json:"parentId" form:"parentId"`                                                                         // 父级菜单id
 	MenuType      int    `json:"menuType" form:"menuType" validate:"oneof=0 1 2 3"`                                                // 菜单类型 0菜单 1iframe 2外链 3按钮
@@ -56,7 +55,6 @@ type ArtMenu struct {
 	ParentId  uint        `json:"-"`                   // 父级菜单Id
 	Path      string      `json:"path"`                // 路由地址
 	Name      string      `json:"name"`                // 路由名称(必须保持唯一)
-	Redirect  string      `json:"redirect,omitempty"`  // 路由重定向
 	Component string      `json:"component,omitempty"` // 按需加载需要展示的页面
 	Meta      ArtMenuMeta `json:"meta"`                // 路由元信息
 	Children  []ArtMenu   `json:"children,omitempty"`  // 子路由配置项

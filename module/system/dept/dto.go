@@ -1,12 +1,12 @@
 package dept
 
 import (
+	"bosh-admin/core/ctx"
 	"bosh-admin/core/db"
-	"bosh-admin/module/basic"
 )
 
 type GetDeptListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	DeptName string `json:"deptName" form:"deptName"`
 	DeptCode string `json:"deptCode" form:"deptCode"`
 	Status   *int   `json:"status" form:"status" validate:"omitnil,oneof=0 1"`

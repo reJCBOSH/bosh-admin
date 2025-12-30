@@ -3,7 +3,6 @@ package menu
 import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/module/auth"
-	"bosh-admin/module/basic"
 )
 
 type SysMenuApi struct {
@@ -40,7 +39,7 @@ func (h *SysMenuApi) GetMenuList(c *ctx.Context) {
 }
 
 func (h *SysMenuApi) GetMenuInfo(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -79,7 +78,7 @@ func (h *SysMenuApi) EditMenu(c *ctx.Context) {
 }
 
 func (h *SysMenuApi) DelMenu(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return

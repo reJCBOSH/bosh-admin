@@ -2,7 +2,6 @@ package loginRecord
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/basic"
 )
 
 type SysLoginRecordApi struct {
@@ -29,7 +28,7 @@ func (h *SysLoginRecordApi) GetLoginRecordList(c *ctx.Context) {
 }
 
 func (h *SysLoginRecordApi) DelLoginRecord(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -42,7 +41,7 @@ func (h *SysLoginRecordApi) DelLoginRecord(c *ctx.Context) {
 }
 
 func (h *SysLoginRecordApi) BatchDelLoginRecord(c *ctx.Context) {
-	var req basic.IdsReq
+	var req ctx.IdsReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return

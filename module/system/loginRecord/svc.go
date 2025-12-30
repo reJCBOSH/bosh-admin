@@ -1,11 +1,12 @@
 package loginRecord
 
 import (
+	"time"
+
 	"bosh-admin/core/db"
 	"bosh-admin/core/exception"
 	"bosh-admin/model"
 	"bosh-admin/util"
-	"time"
 
 	ua "github.com/mssola/user_agent"
 )

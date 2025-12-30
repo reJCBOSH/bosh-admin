@@ -1,10 +1,6 @@
 package main
 
 import (
-	"bosh-admin/core/log"
-	"bosh-admin/global"
-	"bosh-admin/initializer"
-	"bosh-admin/util"
 	"context"
 	"errors"
 	"fmt"
@@ -13,6 +9,11 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"bosh-admin/core/log"
+	"bosh-admin/global"
+	"bosh-admin/initializer"
+	"bosh-admin/util"
 )
 
 func main() {

@@ -2,7 +2,6 @@ package dept
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/basic"
 )
 
 type SysDeptApi struct {
@@ -37,7 +36,7 @@ func (h *SysDeptApi) GetDeptList(c *ctx.Context) {
 }
 
 func (h *SysDeptApi) GetDeptInfo(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -76,7 +75,7 @@ func (h *SysDeptApi) EditDept(c *ctx.Context) {
 }
 
 func (h *SysDeptApi) DelDept(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return

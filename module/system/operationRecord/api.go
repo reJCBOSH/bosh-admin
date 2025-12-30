@@ -2,7 +2,6 @@ package operationRecord
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/basic"
 )
 
 type SysOperationRecordApi struct {
@@ -45,7 +44,7 @@ func (h *SysOperationRecordApi) GetOperationRecordList(c *ctx.Context) {
 }
 
 func (h *SysOperationRecordApi) GetOperationRecordInfo(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -58,7 +57,7 @@ func (h *SysOperationRecordApi) GetOperationRecordInfo(c *ctx.Context) {
 }
 
 func (h *SysOperationRecordApi) DelOperationRecord(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -71,7 +70,7 @@ func (h *SysOperationRecordApi) DelOperationRecord(c *ctx.Context) {
 }
 
 func (h *SysOperationRecordApi) BatchDelOperationRecord(c *ctx.Context) {
-	var req basic.IdsReq
+	var req ctx.IdsReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return

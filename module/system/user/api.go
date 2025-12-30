@@ -3,7 +3,6 @@ package user
 import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/module/auth"
-	"bosh-admin/module/basic"
 )
 
 type SysUserApi struct {
@@ -50,7 +49,7 @@ func (h *SysUserApi) GetUserList(c *ctx.Context) {
 }
 
 func (h *SysUserApi) GetUserInfo(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	info, err := h.svc.GetUserById(req.Id)
 	if c.HandlerError(err) {
 		return
@@ -100,7 +99,7 @@ func (h *SysUserApi) EditUser(c *ctx.Context) {
 }
 
 func (h *SysUserApi) DelUser(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
@@ -114,7 +113,7 @@ func (h *SysUserApi) DelUser(c *ctx.Context) {
 }
 
 func (h *SysUserApi) ResetPassword(c *ctx.Context) {
-	var req basic.IdReq
+	var req ctx.IdReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return

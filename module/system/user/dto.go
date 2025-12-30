@@ -1,8 +1,8 @@
 package user
 
 import (
+	"bosh-admin/core/ctx"
 	"bosh-admin/core/db"
-	"bosh-admin/module/basic"
 )
 
 type UserInfo struct {
@@ -19,7 +19,7 @@ type UserInfo struct {
 }
 
 type GetUserListReq struct {
-	basic.Pagination
+	ctx.Pagination
 	Username string `json:"username" form:"username"`                              // 用户名
 	Nickname string `json:"nickname" form:"nickname"`                              // 昵称
 	Gender   *int   `json:"gender" form:"gender" validate:"omitempty,oneof=0 1 2"` // 性别
