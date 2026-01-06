@@ -19,8 +19,8 @@ log:
 mysql:
   username: root
   password: 123456ljc
-  ip: 127.0.0.1
-  port: 3306
+  ip: 127.0.0.1  # 本地开发环境
+  port: 3306      # 本地开发环境
   database: 'bosh-admin'
   config: charset=utf8mb4&parseTime=True&loc=Local
   maxIdleConns: 10

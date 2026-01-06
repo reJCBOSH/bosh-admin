@@ -1,0 +1,8 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'bosh-admin_server'
+    static_configs:
+      - targets: ['server:8089'] # 对应 Gin 服务的端口

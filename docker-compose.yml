@@ -3,35 +3,67 @@ version: '3.8'
 services:
   # MySQL数据库服务
   mysql:
-    image: mysql:8.0
+    image: mysql:8.0.42
     container_name: bosh_admin_mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci #设置utf8字符集
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: 123456ljc
-      MYSQL_DATABASE: bosh-admin
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    command: --default-authentication-plugin=mysql_native_password
     networks:
       - bosh_admin_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      start_period: 10s
+      interval: 5s
 
   # 应用服务
-  app:
+  server:
     build: .
-    container_name: bosh_admin_app
+    container_name: bosh_admin_server
     restart: always
     ports:
       - "8089:8089"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     environment:
       - SERVER_PORT=8089
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${MYSQL_DATABASE}
     volumes:
       - ./static:/root/static
       - ./logs:/root/logs
+    networks:
+      - bosh_admin_network
+
+  # Prometheus 监控服务
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: bosh_admin_prometheus
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      # 关键点：挂载宿主机项目目录下的 prometheus.yml 到容器内
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      # (可选) 如果你有其他配置片段，也可以挂载整个目录
+      # - ./prometheus:/etc/prometheus/
+    command:
+      # 指定配置文件路径，并开启热重载（修改配置后不用重启容器）
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
+    depends_on:
+      - server # 确保 server 启动后再启动 prometheus (非必须，但推荐)
     networks:
       - bosh_admin_network
 

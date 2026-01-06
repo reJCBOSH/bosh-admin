@@ -8,6 +8,7 @@ import (
 	"bosh-admin/util"
 
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // InitEngine 初始化引擎
@@ -20,6 +21,9 @@ func InitEngine() {
 	engine.Use(middleware.Cors())
 	// 使用gin默认Logger、Recovery中间件
 	engine.Use(gin.Logger(), gin.Recovery())
+	engine.Use(middleware.Prometheus())
+
+	engine.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	router.SetHealthRouter(engine)
 	router.SetStaticRouter(engine)

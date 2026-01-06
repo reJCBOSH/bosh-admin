@@ -30,6 +30,7 @@ COPY --from=builder /app/main .
 
 # 复制配置文件
 COPY --from=builder /app/config.yaml .
+COPY --from=builder /app/ip2region_v4.xdb .
 
 # 创建静态文件目录
 RUN mkdir -p static
