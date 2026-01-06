@@ -8,6 +8,8 @@ import (
 	"bosh-admin/core/db"
 	"bosh-admin/core/exception"
 	"bosh-admin/global"
+
+	"go.uber.org/zap"
 )
 
 const (
@@ -106,7 +108,8 @@ func (c *Context) HandlerError(err error, msg ...string) bool {
 				}
 			}
 		}
-		global.Logger.Error(logErr)
+		traceId := c.Request.Context().Value("traceId")
+		global.Logger.With(zap.Any("traceId", traceId)).Error(logErr)
 		return true
 	}
 	return false

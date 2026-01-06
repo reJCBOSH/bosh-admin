@@ -34,7 +34,7 @@ func SetWebSocketRouter(engine *gin.Engine) {
 }
 
 func SetApiRouter(engine *gin.Engine) {
-	group := engine.Group("/api")
+	group := engine.Group("/api", middleware.TraceId())
 
 	public := group.Group("")
 	{
