@@ -6,16 +6,17 @@ import (
 	"bosh-admin/global"
 	"bosh-admin/util"
 
+	"github.com/duke-git/lancet/v2/fileutil"
 	"github.com/mojocn/base64Captcha"
 )
 
 type BasicApi struct {
-	svc    *BasicSvc
+	svc *BasicSvc
 }
 
 func NewBasicApi() *BasicApi {
 	return &BasicApi{
-		svc:    NewBasicSvc(),
+		svc: NewBasicSvc(),
 	}
 }
 
@@ -40,4 +41,12 @@ func (h *BasicApi) Captcha(c *ctx.Context) {
 		PicPath:       b64s,
 		CaptchaLength: capConfig.KeyLong,
 	})
+}
+
+func (h *BasicApi) GetPublicKey(c *ctx.Context) {
+	publicKey, err := fileutil.ReadFileToString(global.PublicKeyFile)
+	if c.HandlerError(err, "公钥获取失败") {
+		return
+	}
+	c.SuccessWithData(publicKey)
 }

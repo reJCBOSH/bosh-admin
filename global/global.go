@@ -17,6 +17,11 @@ const (
 	PROD = "prod"
 )
 
+const (
+	PrivateKeyFile = "keys/rsa_private.pem"
+	PublicKeyFile  = "keys/rsa_public.pem"
+)
+
 var (
 	Config      config.Config      // 配置
 	Logger      *zap.SugaredLogger // 日志

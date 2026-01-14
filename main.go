@@ -32,6 +32,8 @@ func main() {
 	}()
 	// 初始化IP2Region
 	initializer.InitIP2Region()
+	// 初始化密钥对
+	initializer.InitPem()
 	// 初始化参数校验
 	initializer.InitValidator()
 	// 初始化定时任务

@@ -13,5 +13,6 @@ func SetBasicApiRouter(router *gin.RouterGroup) {
 	handler := basic.NewBasicApi()
 	{
 		group.GET("/captcha", ctx.Handler(handler.Captcha))
+		group.GET("/publicKey", ctx.Handler(handler.GetPublicKey))
 	}
 }
