@@ -33,6 +33,12 @@ func SetWebSocketRouter(engine *gin.Engine) {
 	}))
 }
 
+func SetSSERouter(engine *gin.Engine) {
+	engine.GET("/sse", ctx.Handler(func(c *ctx.Context) {
+		global.SSESrv.HandleSSE(c)
+	}))
+}
+
 func SetApiRouter(engine *gin.Engine) {
 	group := engine.Group("/api", middleware.TraceId())
 

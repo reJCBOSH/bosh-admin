@@ -28,6 +28,7 @@ func InitEngine() {
 	router.SetHealthRouter(engine)
 	router.SetStaticRouter(engine)
 	router.SetWebSocketRouter(engine)
+	router.SetSSERouter(engine)
 	router.SetApiRouter(engine)
 	log.Info("路由注册完成")
 

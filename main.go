@@ -42,6 +42,8 @@ func main() {
 	}
 	// 初始化websocket
 	initializer.InitWebsocket()
+	// 初始化SSE
+	initializer.InitSSE()
 	// 初始化引擎
 	initializer.InitEngine()
 
