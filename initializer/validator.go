@@ -36,7 +36,7 @@ func InitValidator() {
 	global.Trans, _ = uni.GetTranslator("zh")
 	err := zhTranslations.RegisterDefaultTranslations(validate, global.Trans)
 	if err != nil {
-		panic(fmt.Errorf("注册中文翻译器失败: %s \n", err.Error()))
+		panic(fmt.Sprintf("注册中文翻译器失败: %s \n", err.Error()))
 	}
 
 	// 注册自定义检验方法

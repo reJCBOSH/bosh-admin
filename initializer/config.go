@@ -21,19 +21,19 @@ func InitConfig() {
 	v := viper.New()
 	v.SetConfigFile(configFile)
 	v.SetConfigType("yaml")
-	
+
 	// 设置环境变量支持
 	v.AutomaticEnv()
-	
+
 	// 从配置文件读取初始值
 	err := v.ReadInConfig()
 	if err != nil {
-		panic(fmt.Errorf("配置文件错误: %s \n", err.Error()))
+		panic(fmt.Sprintf("配置文件错误: %s", err.Error()))
 	}
-	
+
 	// 优先使用环境变量覆盖配置文件中的值
 	overrideConfigWithEnv(v)
-	
+
 	// 监听配置文件
 	v.WatchConfig()
 	v.OnConfigChange(func(e fsnotify.Event) {

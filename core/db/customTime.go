@@ -1,6 +1,7 @@
 package db
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -46,7 +47,7 @@ func (t *CustomTime) Scan(v any) error {
 		*t = CustomTime(value)
 		return nil
 	}
-	return fmt.Errorf("can not convert %v to timestamp", v)
+	return errors.New(fmt.Sprintf("can not convert %v to timestamp", v))
 }
 
 func (t CustomTime) String() string {
@@ -103,7 +104,7 @@ func (t *CustomDate) Scan(v any) error {
 		*t = CustomDate(value)
 		return nil
 	}
-	return fmt.Errorf("can not convert %v to timestamp", v)
+	return errors.New(fmt.Sprintf("can not convert %v to timestamp", v))
 }
 
 func (t CustomDate) String() string {
