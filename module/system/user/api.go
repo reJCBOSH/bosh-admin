@@ -2,18 +2,18 @@ package user
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/auth"
+	"bosh-admin/service/jwt"
 )
 
 type SysUserApi struct {
 	svc    *SysUserSvc
-	jwtSvc *auth.JWTSvc
+	jwtSvc *jwt.JWTSvc
 }
 
 func NewSysUserApi() *SysUserApi {
 	return &SysUserApi{
 		svc:    NewSysUserSvc(),
-		jwtSvc: auth.NewJWTSvc(),
+		jwtSvc: jwt.NewJWTSvc(),
 	}
 }
 

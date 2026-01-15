@@ -2,18 +2,18 @@ package menu
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/auth"
+	"bosh-admin/service/jwt"
 )
 
 type SysMenuApi struct {
 	svc    *SysMenuSvc
-	jwtSvc *auth.JWTSvc
+	jwtSvc *jwt.JWTSvc
 }
 
 func NewSysMenuApi() *SysMenuApi {
 	return &SysMenuApi{
 		svc:    NewSysMenuSvc(),
-		jwtSvc: auth.NewJWTSvc(),
+		jwtSvc: jwt.NewJWTSvc(),
 	}
 }
 

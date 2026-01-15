@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"bosh-admin/service/jwt"
 	"bytes"
 	"io"
 	"net/http"
@@ -13,7 +14,6 @@ import (
 	"bosh-admin/core/db"
 	"bosh-admin/core/log"
 	"bosh-admin/model"
-	"bosh-admin/module/auth"
 	"bosh-admin/util"
 
 	"github.com/gin-gonic/gin"
@@ -56,7 +56,7 @@ func OperationRecord() gin.HandlerFunc {
 		}
 		var userId uint
 		var username string
-		claims := auth.NewJWTSvc().GetUserClaims(c)
+		claims := jwt.NewJWTSvc().GetUserClaims(c)
 		if claims != nil && claims.UserId != 0 {
 			userId = claims.UserId
 			username = claims.Username

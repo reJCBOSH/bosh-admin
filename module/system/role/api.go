@@ -2,18 +2,18 @@ package role
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/auth"
+	"bosh-admin/service/jwt"
 )
 
 type SysRoleApi struct {
 	svc    *SysRoleSvc
-	jwtSvc *auth.JWTSvc
+	jwtSvc *jwt.JWTSvc
 }
 
 func NewSysRoleApi() *SysRoleApi {
 	return &SysRoleApi{
 		svc:    NewSysRoleSvc(),
-		jwtSvc: auth.NewJWTSvc(),
+		jwtSvc: jwt.NewJWTSvc(),
 	}
 }
 

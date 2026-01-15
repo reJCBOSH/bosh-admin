@@ -1,13 +1,19 @@
 package sse
 
 import (
-	"bosh-admin/core/ctx"
 	"fmt"
 	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
 )
+
+// SSEClient SSE客户端连接
+type SSEClient struct {
+	ClientID string
+	Writer   gin.ResponseWriter
+	Notify   <-chan bool
+}
 
 // SSEService 管理SSE客户端连接
 type SSEService struct {
@@ -71,15 +77,12 @@ func (s *SSEService) BroadcastEventTo(clientID string, eventType string, data st
 	}
 }
 
-func (s *SSEService) HandleSSE(c *ctx.Context) {
-	clientID := c.GetHeader("X-Client-ID")
+func (s *SSEService) HandleSSE(writer gin.ResponseWriter, clientID string) {
 	// 设置SSE响应头
-	c.Writer.Header().Set("Content-Type", "text/event-stream")
-	c.Writer.Header().Set("Cache-Control", "no-cache")
-	c.Writer.Header().Set("Connection", "keep-alive")
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-	// 获取底层的ResponseWriter
-	writer := c.Writer
+	writer.Header().Set("Content-Type", "text/event-stream")
+	writer.Header().Set("Cache-Control", "no-cache")
+	writer.Header().Set("Connection", "keep-alive")
+	writer.Header().Set("Access-Control-Allow-Origin", "*")
 	// 创建通知通道，用于接收客户端的请求
 	notify := writer.CloseNotify()
 	// 注册SSE客户端

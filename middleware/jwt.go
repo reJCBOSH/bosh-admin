@@ -4,8 +4,8 @@ import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/core/log"
 	"bosh-admin/model"
-	"bosh-admin/module/auth"
 	"bosh-admin/module/system/user"
+	"bosh-admin/service/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +13,7 @@ import (
 // JWTApiAuth JWT Api鉴权中间件
 func JWTApiAuth() gin.HandlerFunc {
 	return ctx.Handler(func(c *ctx.Context) {
-		jwtSvc := auth.NewJWTSvc()
+		jwtSvc := jwt.NewJWTSvc()
 		// 获取access token
 		accessToken, err := jwtSvc.GetAccessToken(c)
 		if err != nil {
@@ -29,7 +29,7 @@ func JWTApiAuth() gin.HandlerFunc {
 			return
 		}
 		// 验证token
-		err = jwtSvc.TokenValidate(claims.RegisteredClaims, auth.JwtSubjectAccess, auth.JwtAudienceApi)
+		err = jwtSvc.TokenValidate(claims.RegisteredClaims, jwt.SubjectAccess, jwt.AudienceApi)
 		if err != nil {
 			c.UnAuthorized("令牌验证失败")
 			c.Abort()

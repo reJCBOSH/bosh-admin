@@ -35,7 +35,7 @@ func SetWebSocketRouter(engine *gin.Engine) {
 
 func SetSSERouter(engine *gin.Engine) {
 	engine.GET("/sse", ctx.Handler(func(c *ctx.Context) {
-		global.SSESrv.HandleSSE(c)
+		global.SSESvc.HandleSSE(c.Writer, c.GetHeader("X-Client-ID"))
 	}))
 }
 

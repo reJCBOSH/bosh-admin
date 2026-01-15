@@ -4,18 +4,19 @@ import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/core/log"
 	"bosh-admin/module/system/loginRecord"
+	"bosh-admin/service/jwt"
 )
 
 type AuthApi struct {
 	svc            *AuthSvc
-	jwtSvc         *JWTSvc
+	jwtSvc         *jwt.JWTSvc
 	loginRecordSvc *loginRecord.SysLoginRecordSvc
 }
 
 func NewAuthApi() *AuthApi {
 	return &AuthApi{
 		svc:            NewAuthSvc(),
-		jwtSvc:         NewJWTSvc(),
+		jwtSvc:         jwt.NewJWTSvc(),
 		loginRecordSvc: loginRecord.NewSysLoginRecordSvc(),
 	}
 }

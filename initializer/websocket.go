@@ -3,7 +3,7 @@ package initializer
 import (
 	"bosh-admin/core/log"
 	"bosh-admin/global"
-	"bosh-admin/websocket"
+	"bosh-admin/service/websocket"
 )
 
 // InitWebsocket 初始化websocket

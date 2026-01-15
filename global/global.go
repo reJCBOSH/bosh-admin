@@ -2,8 +2,8 @@ package global
 
 import (
 	"bosh-admin/config"
-	"bosh-admin/sse"
-	"bosh-admin/websocket"
+	"bosh-admin/service/sse"
+	"bosh-admin/service/websocket"
 
 	"github.com/gin-gonic/gin"
 	ut "github.com/go-playground/universal-translator"
@@ -31,7 +31,7 @@ var (
 	Engine      *gin.Engine        // 路由
 	XdbSearcher *xdb.Searcher      // 全局xdb搜索器
 	WsHub       *websocket.Hub     // websocket
-	SSESrv      *sse.SSEService    // SSE
+	SSESvc      *sse.SSEService    // SSE
 )
 
 const (

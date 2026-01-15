@@ -1,4 +1,4 @@
-package auth
+package jwt
 
 import (
 	"slices"
@@ -221,20 +221,20 @@ func (svc *JWTSvc) UserLogin(user *model.SysUser) (string, string, int64, error)
 	claims.ID = uuid
 	var audience []string
 	if user.Role.RoleCode == global.SuperAdmin && user.Dept.DeptCode == global.SystemAdmin {
-		audience = []string{JwtAudienceAll}
+		audience = []string{AudienceAll}
 	} else {
-		audience = []string{JwtAudienceApi, JwtAudienceStatic}
+		audience = []string{AudienceApi, AudienceStatic}
 	}
 	claims.Audience = audience
-	claims.Subject = JwtSubjectAccess
+	claims.Subject = SubjectAccess
 	accessToken, expiresAt, err := svc.GenerateUserAccessToken(claims)
 	if err != nil {
 		return "", "", 0, err
 	}
 	// 为refresh token创建简化的claims，使用相同的UUID
-	refreshClaims := &RefreshTokenClaims{}
+	refreshClaims := new(RefreshTokenClaims)
 	refreshClaims.ID = uuid // 使用相同的UUID，便于拉黑时同时失效
-	refreshClaims.Subject = JwtSubjectRefresh
+	refreshClaims.Subject = SubjectRefresh
 	refreshClaims.Audience = audience
 	refreshClaims.BindId = user.Id
 	refreshToken, _, err := svc.GenerateRefreshToken(refreshClaims)
@@ -260,7 +260,7 @@ func (svc *JWTSvc) RefreshToken(refreshToken string) (string, string, int64, err
 	}
 	var accessToken string
 	var expiresAt int64
-	if slice.Contain(refreshClaims.Audience, JwtAudienceAll) || slice.Contain(refreshClaims.Audience, JwtAudienceApi) {
+	if slice.Contain(refreshClaims.Audience, AudienceAll) || slice.Contain(refreshClaims.Audience, AudienceApi) {
 		// 获取用户信息
 		var user *model.SysUser
 		err = db.GormDB().Where("id = ?", refreshClaims.BindId).Preload("Role").Preload("Dept").First(&user).Error
@@ -281,11 +281,11 @@ func (svc *JWTSvc) RefreshToken(refreshToken string) (string, string, int64, err
 		userAccessClaims := new(UserAccessClaims)
 		userAccessClaims.ID = refreshClaims.ID
 		userAccessClaims.Audience = refreshClaims.Audience
-		userAccessClaims.Subject = JwtSubjectAccess
+		userAccessClaims.Subject = SubjectAccess
 		userAccessClaims.User = userClaims
 		accessToken, expiresAt, err = svc.GenerateUserAccessToken(userAccessClaims)
 	}
-	if slice.Contain(refreshClaims.Audience, JwtAudienceApp) {
+	if slice.Contain(refreshClaims.Audience, AudienceApp) {
 		// 获取成员信息
 	}
 	if err != nil {
