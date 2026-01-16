@@ -1,11 +1,7 @@
 package auth
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
-	"crypto/x509"
 	"encoding/base64"
-	"encoding/pem"
 	"fmt"
 	"io"
 	"os"
@@ -27,29 +23,21 @@ func NewAuthSvc() *AuthSvc {
 }
 
 func (svc *AuthSvc) UserLogin(username, password string) (*model.SysUser, error) {
-	privateKeyFile, err := os.Open(global.PrivateKeyFile)
-	if err != nil {
-		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "打开私钥文件失败"))
-	}
-	privateKeyPEM, err := io.ReadAll(privateKeyFile)
-	if err != nil {
-		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "读取私钥文件失败"))
-	}
-	block, _ := pem.Decode(privateKeyPEM)
-	if block == nil || block.Type != "RSA PRIVATE KEY" {
-		return nil, exception.NewException(ctx.ServerError, errors.New("私钥格式错误"))
-	}
-	privateKey, err := x509.ParsePKCS1PrivateKey(block.Bytes)
-	if err != nil {
-		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "解析私钥失败"))
-	}
 	ciphertext, err := base64.StdEncoding.DecodeString(password)
 	if err != nil {
 		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "base64解密密码失败"))
 	}
-	decryptedPassword, err := rsa.DecryptPKCS1v15(rand.Reader, privateKey, ciphertext)
+	privateKeyFile, err := os.Open(global.PrivateKeyFile)
 	if err != nil {
-		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "RSA解密密码失败"))
+		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "打开私钥文件失败"))
+	}
+	privatePem, err := io.ReadAll(privateKeyFile)
+	if err != nil {
+		return nil, exception.NewException(ctx.ServerError, errors.Wrap(err, "读取私钥文件失败"))
+	}
+	decryptedPassword, err := util.RsaDecrypt(ciphertext, privatePem)
+	if err != nil {
+		return nil, exception.NewException(ctx.ServerError, err)
 	}
 	var user model.SysUser
 	err = db.GormDB().Where("username = ?", username).Preload("Role").Preload("Dept").First(&user).Error
