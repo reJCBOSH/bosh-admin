@@ -1,14 +1,12 @@
 package openapi
 
 import (
+	"bosh-admin/global"
+	"bosh-admin/model"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
-	"time"
-
-	"bosh-admin/global"
-	"bosh-admin/model"
 
 	"gorm.io/gorm"
 )
@@ -32,24 +30,18 @@ type AppKeyInfo struct {
 
 // GetAppKeyInfo 获取应用密钥信息
 func (svc *OpenapiSvc) GetAppKeyInfo(appKey string) (*AppKeyInfo, error) {
-	var appKeyModel model.SysAppKey
-	err := svc.db.Where("app_key = ? AND status = 1", appKey).First(&appKeyModel).Error
+	var app model.SysApp
+	err := svc.db.Where("app_key = ? AND status = 1", appKey).First(&app).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, errors.New("无效的appKey")
 		}
 		return nil, err
 	}
-
-	// 检查是否过期
-	if !appKeyModel.ExpiredAt.ToTime().IsZero() && appKeyModel.ExpiredAt.ToTime().Before(time.Now()) {
-		return nil, errors.New("appKey已过期")
-	}
-
 	return &AppKeyInfo{
-		AppId:     appKeyModel.AppId,
-		AppKey:    appKeyModel.AppKey,
-		SecretKey: appKeyModel.SecretKey,
+		AppId:     app.AppId,
+		AppKey:    app.AppKey,
+		SecretKey: app.SecretKey,
 	}, nil
 }
 

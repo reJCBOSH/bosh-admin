@@ -7,7 +7,7 @@ import (
 type SysBlackJwt struct {
 	db.BasicModel
 	BlackJwt  string `gorm:"comment:作废JWT" json:"blackJwt"`
-	BlackUUID string `gorm:"black_uuid;comment:作废UUID" json:"blackUUID"`
+	BlackUUID string `gorm:"column:black_uuid;type:varchar(40);comment:作废UUID" json:"blackUUID"`
 }
 
 func (SysBlackJwt) TableName() string {

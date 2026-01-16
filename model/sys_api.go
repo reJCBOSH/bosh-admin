@@ -11,7 +11,7 @@ type SysApi struct {
 	ApiPath    string `gorm:"type:varchar(128);not null;comment:api路径" json:"apiPath"`
 	ApiMethod  string `gorm:"type:varchar(16);not null;comment:api方法" json:"apiMethod"`
 	ApiDesc    string `gorm:"type:varchar(128);comment:api描述" json:"apiDesc"`
-	IsRequired int    `gorm:"type:int;default:0;comment:是否必选 0否 1是" json:"isRequired"`
+	IsRequired int    `gorm:"type:tinyint;default:0;comment:是否必选 0否 1是" json:"isRequired"`
 }
 
 func (SysApi) TableName() string {
