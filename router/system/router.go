@@ -7,6 +7,7 @@ import (
 func SetSystemApiRouter(router *gin.RouterGroup) {
 	group := router.Group("/system")
 
+	SetApiApiRouter(group)
 	SetDeptApiRouter(group)
 	SetLoginRecordApiRouter(group)
 	SetMenuApiRouter(group)
