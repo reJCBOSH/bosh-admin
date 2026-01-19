@@ -75,14 +75,14 @@ var InitSchema = &gormigrate.Migration{
 			return err
 		}
 		menus := []model.SysMenu{
-			{Path: "/system", Name: "System", ParentId: 0, Title: "系统管理", Icon: "ri:settings-3-line"},
-			{Path: "/system/user", Name: "SystemUser", Component: "system/user/index", ParentId: 1, Title: "用户管理", Icon: "ri:admin-line", KeepAlive: true},
-			{Path: "/system/role", Name: "SystemRole", Component: "system/role/index", ParentId: 1, Title: "角色管理", Icon: "ri:admin-fill", KeepAlive: true},
-			{Path: "/system/menu", Name: "SystemMenu", Component: "system/menu/index", ParentId: 1, Title: "菜单管理", Icon: "ep:menu", KeepAlive: true},
-			{Path: "/system/dept", Name: "SystemDept", Component: "system/dept/index", ParentId: 1, Title: "部门管理", Icon: "ri:git-branch-line", KeepAlive: true},
-			{Path: "/monitor", Name: "Monitor", ParentId: 0, Title: "系统监控", Icon: "ep:monitor"},
-			{Path: "/monitor/loginRecord", Name: "LoginRecord", Component: "monitor/loginRecord/index", ParentId: 6, Title: "登录日志", Icon: "ri:window-line", KeepAlive: true},
-			{Path: "/monitor/operationRecord", Name: "OperationRecord", Component: "monitor/operationRecord/index", ParentId: 6, Title: "操作日志", Icon: "ri:history-fill", KeepAlive: true},
+			{Path: "/system", Name: "System", Component: "/index/index", ParentId: 0, Title: "系统管理", Icon: "ri:settings-3-line"},
+			{Path: "user", Name: "SystemUser", Component: "/system/user/index", ParentId: 1, Title: "用户管理", Icon: "ri:admin-line", KeepAlive: true},
+			{Path: "role", Name: "SystemRole", Component: "/system/role/index", ParentId: 1, Title: "角色管理", Icon: "ri:admin-fill", KeepAlive: true},
+			{Path: "menu", Name: "SystemMenu", Component: "/system/menu/index", ParentId: 1, Title: "菜单管理", Icon: "ep:menu", KeepAlive: true},
+			{Path: "dept", Name: "SystemDept", Component: "/system/dept/index", ParentId: 1, Title: "部门管理", Icon: "ri:git-branch-line", KeepAlive: true},
+			{Path: "/monitor", Name: "Monitor", Component: "/index/index", ParentId: 0, Title: "系统监控", Icon: "ep:monitor"},
+			{Path: "loginRecord", Name: "LoginRecord", Component: "/monitor/loginRecord/index", ParentId: 6, Title: "登录日志", Icon: "ri:window-line", KeepAlive: true},
+			{Path: "operationRecord", Name: "OperationRecord", Component: "/monitor/operationRecord/index", ParentId: 6, Title: "操作日志", Icon: "ri:history-fill", KeepAlive: true},
 			// 用户按钮
 			{ParentId: 2, MenuType: 3, Title: "新增用户", AuthMark: "sysUser:add"},
 			{ParentId: 2, MenuType: 3, Title: "修改用户", AuthMark: "sysUser:edit"},

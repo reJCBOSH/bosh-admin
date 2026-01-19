@@ -15,7 +15,7 @@ type SysMenu struct {
 	Icon          string    `gorm:"type:varchar(30);not null;comment:菜单图标" json:"icon"`
 	DisplayOrder  int       `gorm:"type:int;default:0;comment:菜单排序" json:"displayOrder"`
 	ShowBadge     bool      `gorm:"default:0;comment:是否显示徽章" json:"showBadge"`
-	ShowTextBadge string    `gorm:"type:varchar(255);default:0;comment:文本徽章" json:"showTextBadge"`
+	ShowTextBadge string    `gorm:"type:varchar(255);comment:文本徽章" json:"showTextBadge"`
 	IsHide        bool      `gorm:"default:0;comment:是否在菜单中隐藏" json:"isHide"`
 	IsHideTab     bool      `gorm:"default:0;comment:是否在标签页中隐藏" json:"isHideTab"`
 	Link          string    `gorm:"type:varchar(255);not null;comment:外链" json:"link"`
