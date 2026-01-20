@@ -7,6 +7,7 @@ import (
 	"bosh-admin/router"
 	"bosh-admin/util"
 
+	"github.com/danielkov/gin-helmet/ginhelmet"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
@@ -21,6 +22,8 @@ func InitEngine() {
 	engine.Use(middleware.Cors())
 	// 使用gin默认Logger、Recovery中间件
 	engine.Use(gin.Logger(), gin.Recovery())
+	// 安全页眉中间件
+	engine.Use(ginhelmet.Default())
 	engine.Use(middleware.Prometheus())
 
 	engine.GET("/metrics", gin.WrapH(promhttp.Handler()))
