@@ -21,7 +21,7 @@ type AddApiReq struct {
 	ApiMethod  string `json:"apiMethod" form:"apiMethod" validate:"required,oneof=GET POST PUT DELETE"`
 	ApiPath    string `json:"apiPath" form:"apiPath" validate:"required,min=1,max=100"`
 	ApiDesc    string `json:"apiDesc" form:"apiDesc"`
-	IsRequired int    `json:"isRequired" form:"isRequired" validate:"required,oneof=0 1"`
+	IsRequired int    `json:"isRequired" form:"isRequired" validate:"oneof=0 1"`
 }
 
 type EditApiReq struct {
@@ -29,5 +29,5 @@ type EditApiReq struct {
 	ApiName    string `json:"apiName" form:"apiName" validate:"required,min=1,max=100"`
 	ApiGroup   string `json:"apiGroup" form:"apiGroup" validate:"required,min=1,max=100"`
 	ApiDesc    string `json:"apiDesc" form:"apiDesc"`
-	IsRequired int    `json:"isRequired" form:"isRequired" validate:"required,oneof=0 1"`
+	IsRequired int    `json:"isRequired" form:"isRequired" validate:"oneof=0 1"`
 }

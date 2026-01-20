@@ -56,7 +56,7 @@ func (svc *SysApiSvc) GetApiInfo(id uint) (*model.SysApi, error) {
 
 func (svc *SysApiSvc) AddApi(req AddApiReq) error {
 	var count int64
-	err := db.GormDB().Model(&model.SysApi{}).Where("api_method = ?").Where("api_path = ?", req.ApiPath).Count(&count).Error
+	err := db.GormDB().Model(&model.SysApi{}).Where("api_method = ?", req.ApiMethod).Where("api_path = ?", req.ApiPath).Count(&count).Error
 	if err != nil {
 		return exception.NewException("查询api信息失败", err)
 	}
