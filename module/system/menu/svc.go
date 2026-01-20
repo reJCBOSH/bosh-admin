@@ -75,7 +75,7 @@ func (svc *SysMenuSvc) AddMenu(menu AddMenuReq) error {
 	var err error
 	if menu.MenuType < 3 {
 		var count int64
-		err = db.GormDB().Where("menu_type < ?", 3).Where("name = ?", menu.Name).Count(&count).Error
+		err = db.GormDB().Model(&model.SysMenu{}).Where("menu_type < ?", 3).Where("name = ?", menu.Name).Count(&count).Error
 		if err != nil {
 			return exception.NewException("查询重名菜单失败", err)
 		}
@@ -84,7 +84,7 @@ func (svc *SysMenuSvc) AddMenu(menu AddMenuReq) error {
 		}
 	} else {
 		var count int64
-		err = db.GormDB().Where("parent_id = ?", menu.ParentId).Where("auth_mark = ?", menu.AuthMark).Count(&count).Error
+		err = db.GormDB().Model(&model.SysMenu{}).Where("parent_id = ?", menu.ParentId).Where("auth_mark = ?", menu.AuthMark).Count(&count).Error
 		if err != nil {
 			return exception.NewException("查询重名按钮失败", err)
 		}
