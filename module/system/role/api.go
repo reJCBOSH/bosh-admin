@@ -130,13 +130,13 @@ func (h *SysRoleApi) GetRoleDeptIds(c *ctx.Context) {
 	c.SuccessWithData(deptIds)
 }
 
-func (h *SysRoleApi) SetRoleDataAuth(c *ctx.Context) {
-	var req SetRoleDataAuthReq
+func (h *SysRoleApi) SetRoleDataPerm(c *ctx.Context) {
+	var req SetRoleDataPermReq
 	msg, err := c.ValidateParams(&req)
 	if c.HandlerError(err, msg) {
 		return
 	}
-	err = h.svc.SetRoleDataAuth(req.RoleId, req.DataAuth, req.DeptIds)
+	err = h.svc.SetRoleDataPerm(req.RoleId, req.DataPerm, req.DeptIds)
 	if c.HandlerError(err) {
 		return
 	}

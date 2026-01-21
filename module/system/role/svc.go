@@ -193,8 +193,8 @@ func (svc *SysRoleSvc) GetRoleDeptIds(roleId any) ([]uint, error) {
 	return deptIds, nil
 }
 
-func (svc *SysRoleSvc) SetRoleDataAuth(roleId uint, dataAuth int, deptIds []uint) error {
-	if dataAuth == 5 && len(deptIds) == 0 {
+func (svc *SysRoleSvc) SetRoleDataPerm(roleId uint, dataPerm int, deptIds []uint) error {
+	if dataPerm == 5 && len(deptIds) == 0 {
 		return exception.NewException("数据权限为自定义时，部门不能为空")
 	}
 	role, err := db.QueryById[model.SysRole](roleId)
@@ -202,7 +202,7 @@ func (svc *SysRoleSvc) SetRoleDataAuth(roleId uint, dataAuth int, deptIds []uint
 		return exception.NewException("查询角色失败", err)
 	}
 	var roleDepts []model.SysRoleDept
-	if dataAuth == 5 {
+	if dataPerm == 5 {
 		var deptNum int64
 		err = db.GormDB().Model(&model.SysDept{}).Where("id IN ?", deptIds).Count(&deptNum).Error
 		if err != nil {
@@ -219,14 +219,14 @@ func (svc *SysRoleSvc) SetRoleDataAuth(roleId uint, dataAuth int, deptIds []uint
 		}
 	}
 	tx := db.Begin()
-	if role.DataAuth != dataAuth {
-		err = tx.Model(&model.SysRole{}).Where("id = ?", role.Id).Update("data_auth", dataAuth).Error
+	if role.DataPerm != dataPerm {
+		err = tx.Model(&model.SysRole{}).Where("id = ?", role.Id).Update("data_perm", dataPerm).Error
 		if err != nil {
 			tx.Rollback()
 			return exception.NewException("设置角色数据权限失败", err)
 		}
 	}
-	if dataAuth == 5 {
+	if dataPerm == 5 {
 		err = tx.Where("role_id = ?", role.Id).Delete(&model.SysRoleDept{}).Error
 		if err != nil {
 			tx.Rollback()
@@ -262,7 +262,7 @@ func (svc *SysRoleSvc) SetRoleStatus(currentRoleId, roleId uint, status int) err
 		if menuNum == 0 {
 			return exception.NewException("请先分配菜单权限")
 		}
-		if role.DataAuth == 0 {
+		if role.DataPerm == 0 {
 			return exception.NewException("请先分配数据权限")
 		}
 	} else {

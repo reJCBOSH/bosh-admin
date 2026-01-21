@@ -50,7 +50,7 @@ var InitSchema = &gormigrate.Migration{
 			RoleCode: global.SuperAdmin,
 			Status:   1,
 			Remark:   "超级管理员",
-			DataAuth: 1,
+			DataPerm: 1,
 		}
 		err = tx.Create(&role).Error
 		if err != nil {
@@ -95,7 +95,7 @@ var InitSchema = &gormigrate.Migration{
 			{ParentId: 3, MenuType: 3, Title: "删除角色", AuthMark: "sysRole:del"},
 			{ParentId: 3, MenuType: 3, Title: "设置角色状态", AuthMark: "sysRole:status"},
 			{ParentId: 3, MenuType: 3, Title: "设置菜单权限", AuthMark: "sysRole:menuAuth"},
-			{ParentId: 3, MenuType: 3, Title: "设置数据权限", AuthMark: "sysRole:dataAuth"},
+			{ParentId: 3, MenuType: 3, Title: "设置数据权限", AuthMark: "sysRole:dataPerm"},
 			// 菜单按钮
 			{ParentId: 4, MenuType: 3, Title: "新增菜单", AuthMark: "sysMenu:add"},
 			{ParentId: 4, MenuType: 3, Title: "修改菜单", AuthMark: "sysMenu:edit"},

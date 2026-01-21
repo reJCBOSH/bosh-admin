@@ -25,7 +25,7 @@ func SetRoleApiRouter(router *gin.RouterGroup) {
 		groupRecord.POST("/edit", ctx.Handler(handler.EditRole))
 		groupRecord.POST("/del", ctx.Handler(handler.DelRole))
 		groupRecord.POST("/setMenuAuth", ctx.Handler(handler.SetRoleMenuAuth))
-		groupRecord.POST("/setDataAuth", ctx.Handler(handler.SetRoleDataAuth))
+		groupRecord.POST("/setDataPerm", ctx.Handler(handler.SetRoleDataPerm))
 		groupRecord.POST("/setStatus", ctx.Handler(handler.SetRoleStatus))
 	}
 }

@@ -30,9 +30,9 @@ type SetRoleMenuAuthReq struct {
 	MenuIds []uint `json:"menuIds" form:"menuIds" validate:"gt=0"`
 }
 
-type SetRoleDataAuthReq struct {
+type SetRoleDataPermReq struct {
 	RoleId   uint   `json:"roleId" form:"roleId" validate:"required,gt=0"`
-	DataAuth int    `json:"dataAuth" form:"dataAuth" validate:"required,oneof=1 2 3 4 5"`
+	DataPerm int    `json:"dataPerm" form:"dataPerm" validate:"required,oneof=1 2 3 4 5"`
 	DeptIds  []uint `json:"deptIds" form:"deptIds"`
 }
 

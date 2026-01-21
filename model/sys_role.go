@@ -11,7 +11,7 @@ type SysRole struct {
 	Status        int    `gorm:"type:tinyint;default:0;comment:状态 0冻结 1正常" json:"status"`
 	Remark        string `gorm:"type:varchar(200);comment:备注" json:"remark"`
 	DefaultRouter string `gorm:"type:varchar(30);comment:默认路由" json:"defaultRouter"`
-	DataAuth      int    `gorm:"type:tinyint;default:0;comment:数据权限 0未配置 1全部数据 2本部门数据 3本部门及以下数据 4本人数据 5自定义数据" json:"dataAuth"`
+	DataPerm      int    `gorm:"type:tinyint;default:0;comment:数据权限 0未配置 1全部数据 2本部门数据 3本部门及以下数据 4本人数据 5自定义数据" json:"dataPerm"`
 }
 
 func (SysRole) TableName() string {
