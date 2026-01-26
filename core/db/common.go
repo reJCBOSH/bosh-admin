@@ -5,6 +5,7 @@ import (
 
 	"bosh-admin/global"
 
+	"github.com/duke-git/lancet/v2/strutil"
 	"gorm.io/gorm"
 )
 
@@ -60,10 +61,15 @@ func PageScope(pageNo, pageSize int) func(db *gorm.DB) *gorm.DB {
 	}
 }
 
-// OrderByScope 排序作用域
-func OrderByScope(orderStr string) func(db *gorm.DB) *gorm.DB {
+// SortScope 排序作用域
+func SortScope(sortProp, sortOrder string) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
-		if orderStr != "" {
+		if sortProp != "" && sortOrder != "" {
+			orderRule := "ASC"
+			if sortOrder == "descending" {
+				orderRule = "DESC"
+			}
+			orderStr := strutil.SnakeCase(sortProp) + " " + orderRule
 			db = db.Order(orderStr)
 		} else {
 			db = db.Order("id DESC")

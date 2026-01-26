@@ -53,8 +53,8 @@ type Pagination struct {
 	PageSize int `json:"pageSize" form:"pageSize" validate:"required_unless=PageNo -1|gt=0,max=100"` // 每页数量
 }
 
-// OrderBy 排序
-type OrderBy struct {
-	Field string `json:"field" form:"field" validate:"omitempty"`              // 排序字段
-	Rule  string `json:"rule" form:"rule" validate:"omitempty,oneof=ASC DESC"` // 排序规则
+// Sort 排序
+type Sort struct {
+	SortProp  string `json:"prop" form:"prop" validate:"omitempty"`                              // 排序字段
+	SortOrder string `json:"order" form:"order" validate:"omitempty,oneof=ascending descending"` // 排序规则
 }

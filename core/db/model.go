@@ -12,13 +12,6 @@ type BasicModel struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`              // 删除时间
 }
 
-// Other 分页、排序
-type Other struct {
-	Limit   int    // 限制
-	Offset  int    // 偏移
-	OrderBy string // 排序
-}
-
 // PermissionModel 权限模型
 type PermissionModel struct {
 	CreatedBy uint   `gorm:"created_by" json:"-"` // 创建人id
