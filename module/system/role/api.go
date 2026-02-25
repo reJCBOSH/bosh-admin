@@ -2,18 +2,15 @@ package role
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/service/jwt"
 )
 
 type SysRoleApi struct {
-	svc    *SysRoleSvc
-	jwtSvc *jwt.JWTSvc
+	svc *SysRoleSvc
 }
 
 func NewSysRoleApi() *SysRoleApi {
 	return &SysRoleApi{
-		svc:    NewSysRoleSvc(),
-		jwtSvc: jwt.NewJWTSvc(),
+		svc: NewSysRoleSvc(),
 	}
 }
 
@@ -141,8 +138,8 @@ func (h *SysRoleApi) SetRoleDataPerm(c *ctx.Context) {
 		return
 	}
 	// 判断是否统一角色
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	c.SuccessWithData(userClaims.RoleId == req.RoleId)
+	userAuthInfo := c.GetUserAuthInfo()
+	c.SuccessWithData(userAuthInfo.RoleId == req.RoleId)
 }
 
 func (h *SysRoleApi) SetRoleStatus(c *ctx.Context) {
@@ -151,8 +148,8 @@ func (h *SysRoleApi) SetRoleStatus(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.SetRoleStatus(userClaims.RoleId, req.RoleId, req.Status)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.SetRoleStatus(userAuthInfo.RoleId, req.RoleId, req.Status)
 	if c.HandlerError(err) {
 		return
 	}

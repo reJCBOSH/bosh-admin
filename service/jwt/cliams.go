@@ -15,12 +15,6 @@ type UserClaims struct {
 	UserId   uint   `json:"userId"`   // 用户id
 	Username string `json:"username"` // 用户名
 	Nickname string `json:"nickname"` // 昵称
-	RoleId   uint   `json:"roleId"`   // 角色id
-	RoleCode string `json:"roleCode"` // 角色标识
-	DataPerm int    `json:"dataPerm"` // 数据权限
-	DeptId   uint   `json:"deptId"`   // 部门id
-	DeptCode string `json:"deptCode"` // 部门标识
-	DeptPath string `json:"deptPath"` // 部门路径
 }
 
 type UserAccessClaims struct {

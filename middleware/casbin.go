@@ -4,7 +4,6 @@ import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/global"
 	"bosh-admin/service/casbin"
-	"bosh-admin/service/jwt"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,11 +14,15 @@ func CasbinRBAC() gin.HandlerFunc {
 		if global.Config.Server.Env == global.DEV {
 			c.Next()
 		} else {
-			jwtSvc := jwt.NewJWTSvc()
-			waitUser := jwtSvc.GetUserClaims(c)
-			if waitUser.RoleCode != global.SuperAdmin {
+			userAuthInfo := c.GetUserAuthInfo()
+			if userAuthInfo == nil {
+				c.Fail("访问权限不足")
+				c.Abort()
+				return
+			}
+			if userAuthInfo.RoleCode != global.SuperAdmin {
 				// 获取用户当前角色
-				sub := waitUser.RoleId
+				sub := userAuthInfo.RoleId
 				// 获取请求路径
 				obj := c.Request.URL.Path
 				// 获取请求方法

@@ -2,18 +2,15 @@ package menu
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/service/jwt"
 )
 
 type SysMenuApi struct {
-	svc    *SysMenuSvc
-	jwtSvc *jwt.JWTSvc
+	svc *SysMenuSvc
 }
 
 func NewSysMenuApi() *SysMenuApi {
 	return &SysMenuApi{
-		svc:    NewSysMenuSvc(),
-		jwtSvc: jwt.NewJWTSvc(),
+		svc: NewSysMenuSvc(),
 	}
 }
 
@@ -91,12 +88,12 @@ func (h *SysMenuApi) DelMenu(c *ctx.Context) {
 }
 
 func (h *SysMenuApi) GetAsyncRoutes(c *ctx.Context) {
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	if userClaims == nil {
+	userAuthInfo := c.GetUserAuthInfo()
+	if userAuthInfo == nil {
 		c.UnAuthorized("用户信息获取失败")
 		return
 	}
-	routes, err := h.svc.GetAsyncRoutes(userClaims.RoleId, userClaims.RoleCode)
+	routes, err := h.svc.GetAsyncRoutes(userAuthInfo.RoleId, userAuthInfo.RoleCode)
 	if c.HandlerError(err) {
 		return
 	}

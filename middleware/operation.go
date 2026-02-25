@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"bosh-admin/service/jwt"
 	"bytes"
 	"io"
 	"net/http"
@@ -56,10 +55,10 @@ func OperationRecord() gin.HandlerFunc {
 		}
 		var userId uint
 		var username string
-		claims := jwt.NewJWTSvc().GetUserClaims(c)
-		if claims != nil && claims.UserId != 0 {
-			userId = claims.UserId
-			username = claims.Username
+		userAuthInfo := c.GetUserAuthInfo()
+		if userAuthInfo != nil {
+			userId = userAuthInfo.UserId
+			username = userAuthInfo.Username
 		}
 		requestIP := c.ClientIP()
 		userAgent := c.Request.UserAgent()

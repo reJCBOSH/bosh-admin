@@ -1,6 +1,8 @@
 package ctx
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 type Context struct {
 	*gin.Context

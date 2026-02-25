@@ -1,12 +1,13 @@
 package openapi
 
 import (
-	"bosh-admin/global"
-	"bosh-admin/model"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+
+	"bosh-admin/global"
+	"bosh-admin/model"
 
 	"gorm.io/gorm"
 )

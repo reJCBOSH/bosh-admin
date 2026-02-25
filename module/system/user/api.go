@@ -2,18 +2,15 @@ package user
 
 import (
 	"bosh-admin/core/ctx"
-	"bosh-admin/service/jwt"
 )
 
 type SysUserApi struct {
-	svc    *SysUserSvc
-	jwtSvc *jwt.JWTSvc
+	svc *SysUserSvc
 }
 
 func NewSysUserApi() *SysUserApi {
 	return &SysUserApi{
-		svc:    NewSysUserSvc(),
-		jwtSvc: jwt.NewJWTSvc(),
+		svc: NewSysUserSvc(),
 	}
 }
 
@@ -104,8 +101,8 @@ func (h *SysUserApi) DelUser(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.DelUser(userClaims.UserId, req.Id)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.DelUser(userAuthInfo.UserId, req.Id)
 	if c.HandlerError(err) {
 		return
 	}
@@ -118,8 +115,8 @@ func (h *SysUserApi) ResetPassword(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.ResetPassword(userClaims.UserId, req.Id)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.ResetPassword(userAuthInfo.UserId, req.Id)
 	if c.HandlerError(err) {
 		return
 	}
@@ -132,8 +129,8 @@ func (h *SysUserApi) SetUserStatus(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.SetUserStatus(userClaims.UserId, req.Id, req.Status)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.SetUserStatus(userAuthInfo.UserId, req.Id, req.Status)
 	if c.HandlerError(err) {
 		return
 	}
@@ -141,8 +138,8 @@ func (h *SysUserApi) SetUserStatus(c *ctx.Context) {
 }
 
 func (h *SysUserApi) GetSelfInfo(c *ctx.Context) {
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	info, err := h.svc.GetUserById(userClaims.UserId)
+	userAuthInfo := c.GetUserAuthInfo()
+	info, err := h.svc.GetUserById(userAuthInfo.UserId)
 	if c.HandlerError(err) {
 		return
 	}
@@ -166,8 +163,8 @@ func (h *SysUserApi) EditSelfInfo(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.EditSelfInfo(userClaims.UserId, req)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.EditSelfInfo(userAuthInfo.UserId, req)
 	if c.HandlerError(err) {
 		return
 	}
@@ -180,8 +177,8 @@ func (h *SysUserApi) EditSelfPassword(c *ctx.Context) {
 	if c.HandlerError(err, msg) {
 		return
 	}
-	userClaims := h.jwtSvc.GetUserClaims(c)
-	err = h.svc.EditSelfPassword(userClaims.UserId, req)
+	userAuthInfo := c.GetUserAuthInfo()
+	err = h.svc.EditSelfPassword(userAuthInfo.UserId, req)
 	if c.HandlerError(err) {
 		return
 	}

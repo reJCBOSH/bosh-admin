@@ -163,20 +163,6 @@ func (svc *JWTSvc) GetUserAccessClaims(c *ctx.Context) (*UserAccessClaims, error
 	return svc.ParseUserAccessToken(tokenStr)
 }
 
-// GetUserClaims 获取UserClaims
-func (svc *JWTSvc) GetUserClaims(c *ctx.Context) *UserClaims {
-	if claims, exists := c.Get("userAccessClaims"); !exists {
-		if cl, err := svc.GetUserAccessClaims(c); err != nil {
-			return nil
-		} else {
-			return cl.User
-		}
-	} else {
-		waitUse := claims.(*UserAccessClaims)
-		return waitUse.User
-	}
-}
-
 // GetMemberAccessClaims 获取MemberAccessClaims
 func (svc *JWTSvc) GetMemberAccessClaims(c *ctx.Context) (*MemberAccessClaims, error) {
 	tokenStr, err := svc.GetAccessToken(c)
@@ -186,32 +172,12 @@ func (svc *JWTSvc) GetMemberAccessClaims(c *ctx.Context) (*MemberAccessClaims, e
 	return svc.ParseMemberAccessToken(tokenStr)
 }
 
-// GetMemberClaims 获取MemberClaims
-func (svc *JWTSvc) GetMemberClaims(c *ctx.Context) *MemberClaims {
-	if claims, exists := c.Get("memberAccessClaims"); !exists {
-		if cl, err := svc.GetMemberAccessClaims(c); err != nil {
-			return nil
-		} else {
-			return cl.Member
-		}
-	} else {
-		waitUse := claims.(*MemberAccessClaims)
-		return waitUse.Member
-	}
-}
-
 func (svc *JWTSvc) UserLogin(user *model.SysUser) (string, string, int64, error) {
 	var claims = &UserAccessClaims{
 		User: &UserClaims{
 			UserId:   user.Id,
 			Username: user.Username,
 			Nickname: user.Nickname,
-			RoleId:   user.RoleId,
-			RoleCode: user.Role.RoleCode,
-			DataPerm: user.Role.DataPerm,
-			DeptId:   user.DeptId,
-			DeptCode: user.Dept.DeptCode,
-			DeptPath: user.Dept.DeptPath,
 		},
 	}
 	uuid, err := random.UUIdV4()
@@ -271,12 +237,6 @@ func (svc *JWTSvc) RefreshToken(refreshToken string) (string, string, int64, err
 			UserId:   user.Id,
 			Username: user.Username,
 			Nickname: user.Nickname,
-			RoleId:   user.RoleId,
-			RoleCode: user.Role.RoleCode,
-			DataPerm: user.Role.DataPerm,
-			DeptId:   user.DeptId,
-			DeptCode: user.Dept.DeptCode,
-			DeptPath: user.Dept.DeptPath,
 		}
 		userAccessClaims := new(UserAccessClaims)
 		userAccessClaims.ID = refreshClaims.ID

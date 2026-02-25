@@ -49,8 +49,8 @@ func JWTApiAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		// 将claims存储到上下文中，供后续使用
-		c.Set("userAccessClaims", claims)
+		// 将用户信息存储到上下文中，供后续使用
+		c.SetUserAuthInfo(userInfo)
 		// 鉴权通过，继续处理请求
 		c.Next()
 	})
