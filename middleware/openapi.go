@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"bosh-admin/core/ctx"
-	"bosh-admin/module/openapi"
+	"bosh-admin/domain/api/openapi"
 )
 
 // OpenAPIAuth 开放API鉴权中间件
 func OpenAPIAuth() ctx.HandlerFunc {
-	svc := openapi.NewOpenAPISvc()
+	svc := openapi.NewSvcOpenapi()
 
 	return func(c *ctx.Context) {
 		// 从请求头获取AppKey
@@ -84,7 +84,7 @@ func OpenAPIAuth() ctx.HandlerFunc {
 
 // OpenAPIPermission 权限验证中间件
 func OpenAPIPermission() ctx.HandlerFunc {
-	svc := openapi.NewOpenAPISvc()
+	svc := openapi.NewSvcOpenapi()
 
 	return func(c *ctx.Context) {
 		// 从上下文中获取应用ID

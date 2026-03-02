@@ -13,10 +13,10 @@ import (
 	gormAdapter "github.com/casbin/gorm-adapter/v3"
 )
 
-type CasbinSvc struct{}
+type SvcCasbin struct{}
 
-func NewCasbinSvc() *CasbinSvc {
-	return &CasbinSvc{}
+func NewCasbinSvc() *SvcCasbin {
+	return &SvcCasbin{}
 }
 
 var (
@@ -30,7 +30,7 @@ type CasbinInfo struct {
 	Method string `json:"method"` // 方法
 }
 
-func (svc *CasbinSvc) Casbin() *casbin.SyncedEnforcer {
+func (svc *SvcCasbin) Casbin() *casbin.SyncedEnforcer {
 	once.Do(func() {
 		a, _ := gormAdapter.NewAdapterByDB(db.GormDB())
 		text := `
@@ -61,14 +61,14 @@ func (svc *CasbinSvc) Casbin() *casbin.SyncedEnforcer {
 }
 
 // ClearCasbin 清除匹配的访问权限
-func (svc *CasbinSvc) ClearCasbin(v int, p ...string) bool {
+func (svc *SvcCasbin) ClearCasbin(v int, p ...string) bool {
 	e := svc.Casbin()
 	success, _ := e.RemoveFilteredPolicy(v, p...)
 	return success
 }
 
 // UpdateCasbin 更新访问权限
-func (svc *CasbinSvc) UpdateCasbin(roleId uint, casbinInfos []CasbinInfo) error {
+func (svc *SvcCasbin) UpdateCasbin(roleId uint, casbinInfos []CasbinInfo) error {
 	roleIdStr := strconv.Itoa(int(roleId))
 	svc.ClearCasbin(0, roleIdStr)
 	var rules [][]string
@@ -84,7 +84,7 @@ func (svc *CasbinSvc) UpdateCasbin(roleId uint, casbinInfos []CasbinInfo) error 
 }
 
 // UpdateCasbinApi 更新访问api
-func (svc *CasbinSvc) UpdateCasbinApi(oldPath, newPath, oldMethod, newMethod string) error {
+func (svc *SvcCasbin) UpdateCasbinApi(oldPath, newPath, oldMethod, newMethod string) error {
 	e := svc.Casbin()
 	success, err := e.UpdatePolicy([]string{"", oldPath, oldMethod}, []string{"", newPath, newMethod})
 	if !success {
@@ -98,7 +98,7 @@ func (svc *CasbinSvc) UpdateCasbinApi(oldPath, newPath, oldMethod, newMethod str
 }
 
 // GetCasbinByRoleId 通过roleId获取访问权限
-func (svc *CasbinSvc) GetCasbinByRoleId(roleId uint) ([]CasbinInfo, error) {
+func (svc *SvcCasbin) GetCasbinByRoleId(roleId uint) ([]CasbinInfo, error) {
 	e := svc.Casbin()
 	roleIdStr := strconv.Itoa(int(roleId))
 	list, err := e.GetFilteredPolicy(0, roleIdStr)
@@ -115,7 +115,7 @@ func (svc *CasbinSvc) GetCasbinByRoleId(roleId uint) ([]CasbinInfo, error) {
 	return rules, nil
 }
 
-func (svc *CasbinSvc) RemoveCasbin(path, method string) error {
+func (svc *SvcCasbin) RemoveCasbin(path, method string) error {
 	e := svc.Casbin()
 	success, err := e.RemovePolicy("", path, method)
 	if !success {

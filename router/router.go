@@ -6,7 +6,8 @@ import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/global"
 	"bosh-admin/middleware"
-	"bosh-admin/router/system"
+	"bosh-admin/router/api"
+	"bosh-admin/router/api/system"
 
 	"github.com/gin-gonic/gin"
 )
@@ -44,13 +45,13 @@ func SetApiRouter(engine *gin.Engine) {
 
 	public := group.Group("")
 	{
-		SetAuthApiRouter(public)
-		SetBasicApiRouter(public)
+		api.SetAuthRouter(public)
+		api.SetBasicRouter(public)
 	}
 
 	private := group.Group("", middleware.JWTApiAuth())
 	{
-		system.SetSystemApiRouter(private)
+		system.SetSystemRouter(private)
 	}
 }
 

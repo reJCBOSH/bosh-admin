@@ -16,7 +16,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-type JWTSvc struct {
+type SvcJWT struct {
 	accessSecret    []byte // access token密钥
 	refreshSecret   []byte // refresh token密钥
 	accessDuration  int64  // access token有效时长
@@ -24,8 +24,8 @@ type JWTSvc struct {
 	bufferDuration  int64  // 缓冲时长
 }
 
-func NewJWTSvc() *JWTSvc {
-	return &JWTSvc{
+func NewSvcJWT() *SvcJWT {
+	return &SvcJWT{
 		accessSecret:    []byte(global.Config.JWT.AccessSecret),
 		refreshSecret:   []byte(global.Config.JWT.RefreshSecret),
 		accessDuration:  global.Config.JWT.AccessDuration,
@@ -34,7 +34,7 @@ func NewJWTSvc() *JWTSvc {
 	}
 }
 
-func (svc *JWTSvc) GetAccessToken(c *ctx.Context) (string, error) {
+func (svc *SvcJWT) GetAccessToken(c *ctx.Context) (string, error) {
 	// 从请求头中获取Authorization
 	headerAuth := c.Request.Header.Get("Authorization")
 	if headerAuth == "" {
@@ -60,7 +60,7 @@ func enhanceClaims(claims *jwt.RegisteredClaims, issuer string, duration int64) 
 }
 
 // GenerateUserAccessToken 生成用户access token
-func (svc *JWTSvc) GenerateUserAccessToken(claims *UserAccessClaims) (string, int64, error) {
+func (svc *SvcJWT) GenerateUserAccessToken(claims *UserAccessClaims) (string, int64, error) {
 	expiresAt := enhanceClaims(&claims.RegisteredClaims, global.Config.Server.Name, svc.accessDuration)
 	// 使用指定的签名方法签名token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -70,7 +70,7 @@ func (svc *JWTSvc) GenerateUserAccessToken(claims *UserAccessClaims) (string, in
 }
 
 // GenerateMemberAccessToken 生成成员access token
-func (svc *JWTSvc) GenerateMemberAccessToken(claims *MemberAccessClaims) (string, int64, error) {
+func (svc *SvcJWT) GenerateMemberAccessToken(claims *MemberAccessClaims) (string, int64, error) {
 	expiresAt := enhanceClaims(&claims.RegisteredClaims, global.Config.Server.Name, svc.accessDuration)
 	// 使用指定的签名方法签名token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -80,7 +80,7 @@ func (svc *JWTSvc) GenerateMemberAccessToken(claims *MemberAccessClaims) (string
 }
 
 // GenerateRefreshToken 生成refresh token
-func (svc *JWTSvc) GenerateRefreshToken(claims *RefreshTokenClaims) (string, int64, error) {
+func (svc *SvcJWT) GenerateRefreshToken(claims *RefreshTokenClaims) (string, int64, error) {
 	expiresAt := enhanceClaims(&claims.RegisteredClaims, global.Config.Server.Name, svc.refreshDuration)
 	// 使用指定的签名方法签名token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -90,7 +90,7 @@ func (svc *JWTSvc) GenerateRefreshToken(claims *RefreshTokenClaims) (string, int
 }
 
 // ParseUserAccessToken 解析用户access token
-func (svc *JWTSvc) ParseUserAccessToken(tokenStr string) (*UserAccessClaims, error) {
+func (svc *SvcJWT) ParseUserAccessToken(tokenStr string) (*UserAccessClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &UserAccessClaims{}, func(token *jwt.Token) (any, error) {
 		return svc.accessSecret, nil
 	})
@@ -106,7 +106,7 @@ func (svc *JWTSvc) ParseUserAccessToken(tokenStr string) (*UserAccessClaims, err
 }
 
 // ParseMemberAccessToken 解析成员access token
-func (svc *JWTSvc) ParseMemberAccessToken(tokenStr string) (*MemberAccessClaims, error) {
+func (svc *SvcJWT) ParseMemberAccessToken(tokenStr string) (*MemberAccessClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &MemberAccessClaims{}, func(token *jwt.Token) (any, error) {
 		return svc.accessSecret, nil
 	})
@@ -122,7 +122,7 @@ func (svc *JWTSvc) ParseMemberAccessToken(tokenStr string) (*MemberAccessClaims,
 }
 
 // ParseRefreshToken 解析refresh token
-func (svc *JWTSvc) ParseRefreshToken(tokenStr string) (*RefreshTokenClaims, error) {
+func (svc *SvcJWT) ParseRefreshToken(tokenStr string) (*RefreshTokenClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &RefreshTokenClaims{}, func(token *jwt.Token) (any, error) {
 		return svc.refreshSecret, nil
 	})
@@ -138,7 +138,7 @@ func (svc *JWTSvc) ParseRefreshToken(tokenStr string) (*RefreshTokenClaims, erro
 }
 
 // TokenValidate token校验
-func (svc *JWTSvc) TokenValidate(claims jwt.RegisteredClaims, subject, audience string) error {
+func (svc *SvcJWT) TokenValidate(claims jwt.RegisteredClaims, subject, audience string) error {
 	if claims.ID == "" {
 		return exception.NewException("无效token")
 	}
@@ -155,7 +155,7 @@ func (svc *JWTSvc) TokenValidate(claims jwt.RegisteredClaims, subject, audience 
 }
 
 // GetUserAccessClaims 获取UserAccessClaims
-func (svc *JWTSvc) GetUserAccessClaims(c *ctx.Context) (*UserAccessClaims, error) {
+func (svc *SvcJWT) GetUserAccessClaims(c *ctx.Context) (*UserAccessClaims, error) {
 	tokenStr, err := svc.GetAccessToken(c)
 	if err != nil {
 		return nil, err
@@ -164,7 +164,7 @@ func (svc *JWTSvc) GetUserAccessClaims(c *ctx.Context) (*UserAccessClaims, error
 }
 
 // GetMemberAccessClaims 获取MemberAccessClaims
-func (svc *JWTSvc) GetMemberAccessClaims(c *ctx.Context) (*MemberAccessClaims, error) {
+func (svc *SvcJWT) GetMemberAccessClaims(c *ctx.Context) (*MemberAccessClaims, error) {
 	tokenStr, err := svc.GetAccessToken(c)
 	if err != nil {
 		return nil, err
@@ -172,7 +172,7 @@ func (svc *JWTSvc) GetMemberAccessClaims(c *ctx.Context) (*MemberAccessClaims, e
 	return svc.ParseMemberAccessToken(tokenStr)
 }
 
-func (svc *JWTSvc) UserLogin(user *model.SysUser) (string, string, int64, error) {
+func (svc *SvcJWT) UserLogin(user *model.SysUser) (string, string, int64, error) {
 	var claims = &UserAccessClaims{
 		User: &UserClaims{
 			UserId:   user.Id,
@@ -211,7 +211,7 @@ func (svc *JWTSvc) UserLogin(user *model.SysUser) (string, string, int64, error)
 }
 
 // RefreshToken 刷新token
-func (svc *JWTSvc) RefreshToken(refreshToken string) (string, string, int64, error) {
+func (svc *SvcJWT) RefreshToken(refreshToken string) (string, string, int64, error) {
 	// 验证refresh token
 	refreshClaims, err := svc.ParseRefreshToken(refreshToken)
 	if err != nil {

@@ -12,17 +12,56 @@ bosh-admin 是一个基于Go语言开发的后台管理系统。
 │   ├── db                  # 数据库相关
 │   ├── exception           # 异常处理
 │   └── log                 # 日志模块
+├── domain                  # 领域层
+│   ├── api                 # API领域
+│   │   ├── auth            # 认证相关
+│   │   ├── basic           # 基础功能
+│   │   ├── openapi         # 开放API
+│   │   └── system          # 系统管理
+│   │       ├── api         # 接口管理
+│   │       ├── dept        # 部门管理
+│   │       ├── loginRecord # 登录记录
+│   │       ├── menu        # 菜单管理
+│   │       ├── operationRecord # 操作记录
+│   │       ├── role        # 角色管理
+│   │       └── user        # 用户管理
+│   └── openapi             # 开放接口领域
 ├── global                  # 全局变量
 ├── initializer             # 初始化模块
 ├── middleware              # 中间件
 ├── migrations              # 数据库迁移
 ├── model                   # 数据模型
-├── module                  # 功能模块
 ├── router                  # 路由配置
+│   ├── api                 # API路由
+│   │   ├── auth.go         # 认证路由
+│   │   ├── basic.go        # 基础路由
+│   │   └── system          # 系统路由
+│   │       ├── api.go      # 接口路由
+│   │       ├── dept.go     # 部门路由
+│   │       ├── loginRecord.go # 登录记录路由
+│   │       ├── menu.go     # 菜单路由
+│   │       ├── operationRecord.go # 操作记录路由
+│   │       ├── role.go     # 角色路由
+│   │       ├── router.go   # 系统路由配置
+│   │       └── user.go     # 用户路由
+│   └── router.go           # 主路由配置
+├── service                 # 服务层
+│   ├── casbin              # 权限控制服务
+│   ├── jwt                 # JWT服务
+│   ├── sse                 # SSE服务
+│   └── websocket           # WebSocket服务
 ├── util                    # 工具类
-├── websocket               # WebSocket相关
-├── main.go                 # 入口文件
-└── config.yaml             # 配置文件
+├── .dockerignore           # Docker忽略文件
+├── .env                    # 环境变量配置
+├── .gitignore              # Git忽略文件
+├── config.yaml             # 主配置文件
+├── docker-compose.yml      # Docker编排配置
+├── Dockerfile              # Docker构建文件
+├── go.mod                  # Go模块配置
+├── go.sum                  # Go依赖校验
+├── main.go                 # 程序入口文件
+├── makefile                # 构建脚本
+└── prometheus.yml          # 监控配置
 ```
 
 ## Docker 部署

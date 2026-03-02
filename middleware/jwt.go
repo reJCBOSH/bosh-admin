@@ -3,8 +3,8 @@ package middleware
 import (
 	"bosh-admin/core/ctx"
 	"bosh-admin/core/log"
+	"bosh-admin/domain/api/system/user"
 	"bosh-admin/model"
-	"bosh-admin/module/system/user"
 	"bosh-admin/service/jwt"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,7 @@ import (
 // JWTApiAuth JWT Api鉴权中间件
 func JWTApiAuth() gin.HandlerFunc {
 	return ctx.Handler(func(c *ctx.Context) {
-		jwtSvc := jwt.NewJWTSvc()
+		jwtSvc := jwt.NewSvcJWT()
 		// 获取access token
 		accessToken, err := jwtSvc.GetAccessToken(c)
 		if err != nil {
@@ -35,7 +35,7 @@ func JWTApiAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		userSvc := user.NewSysUserSvc()
+		userSvc := user.NewSvcSysUser()
 		var userInfo *model.SysUser
 		userInfo, err = userSvc.GetUserById(claims.User.UserId)
 		if err != nil {
