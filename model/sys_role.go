@@ -7,7 +7,7 @@ import (
 type SysRole struct {
 	db.BasicModel
 	RoleName      string `gorm:"type:varchar(30);not null;comment:角色名称" json:"roleName"`
-	RoleCode      string `gorm:"type:varchar(30);not null;unique;comment:角色编码" json:"roleCode"`
+	RoleCode      string `gorm:"type:varchar(30) COLLATE utf8mb4_bin;not null;unique;comment:角色编码" json:"roleCode"`
 	Status        int    `gorm:"type:tinyint;default:0;comment:状态 0冻结 1正常" json:"status"`
 	Remark        string `gorm:"type:varchar(200);comment:备注" json:"remark"`
 	DefaultRouter string `gorm:"type:varchar(30);comment:默认路由" json:"defaultRouter"`

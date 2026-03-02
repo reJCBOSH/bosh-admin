@@ -6,7 +6,7 @@ import (
 
 type SysUser struct {
 	db.BasicModel
-	Username      string        `gorm:"type:varchar(100);not null;unique;comment:用户名" json:"username"`
+	Username      string        `gorm:"type:varchar(100) COLLATE utf8mb4_bin;not null;unique;comment:用户名" json:"username"`
 	Password      string        `gorm:"type:varchar(100);not null;comment:密码" json:"-"`
 	PwdUpdatedAt  db.CustomTime `gorm:"comment:密码修改时间" json:"pwdUpdatedAt"`
 	PwdRemainTime int           `gorm:"type:smallint;default:5;comment:剩余尝试次数" json:"-"`

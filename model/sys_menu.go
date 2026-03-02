@@ -7,7 +7,7 @@ import (
 type SysMenu struct {
 	db.BasicModel
 	Path          string    `gorm:"type:varchar(255);not null;comment:路由路径" json:"path"`
-	Name          string    `gorm:"type:varchar(30);not null;comment:路由名称" json:"name"`
+	Name          string    `gorm:"type:varchar(30) COLLATE utf8mb4_bin;not null;comment:路由名称" json:"name"`
 	Component     string    `gorm:"type:varchar(255);comment:按需加载需要展示的页面" json:"component"`
 	ParentId      uint      `gorm:"default:0;comment:父级菜单id" json:"parentId"`
 	MenuType      int       `gorm:"default:0;comment:菜单类型 0菜单 1iframe 2外链 3按钮" json:"menuType"`
@@ -22,7 +22,7 @@ type SysMenu struct {
 	IsIframe      bool      `gorm:"default:0;comment:是否内嵌iframe" json:"isIframe"`
 	KeepAlive     bool      `gorm:"default:0;comment:是否缓存改路由页面" json:"keepAlive"`
 	FixedTab      bool      `gorm:"default:0;comment:固定标签页" json:"fixedTab"`
-	AuthMark      string    `gorm:"type:varchar(255);not null;comment:权限标识" json:"authMark"`
+	AuthMark      string    `gorm:"type:varchar(255) COLLATE utf8mb4_bin;not null;comment:权限标识" json:"authMark"`
 	Children      []SysMenu `gorm:"-" json:"children"`
 }
 
