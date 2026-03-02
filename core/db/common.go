@@ -48,7 +48,7 @@ func DelById[T any](id any) error {
 
 func DelByIds[T any](ids ...any) error {
 	model := new(T)
-	return GormDB().Delete(model, ids...).Error
+	return global.GormDB.Delete(model, ids...).Error
 }
 
 // PageScope 分页作用域
@@ -129,5 +129,33 @@ func OptimizedRandomOrderScope(table interface{}, pkField ...string) func(db *go
 		// 生成随机ID范围查询
 		randomID := rand.Intn(maxID)
 		return tx.Where(pk+" >= ?", randomID).Order(pk).Limit(1)
+	}
+}
+
+func DataPermScope(tableName string, info *DataPermission) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		if info.RoleCode == global.SuperAdmin {
+			return db
+		} else {
+			switch info.DataPerm {
+			case 1:
+				// 所有数据
+				return db.Where(tableName + ".create_by != 0")
+			case 2:
+				// 本部门数据
+				return db.Where(tableName+".create_by IN (SELECT user_id FROM sys_user WHERE dept_id = ?)", info.DeptId)
+			case 3:
+				// 本部门及以下数据
+				return db.Where(tableName+".create_by IN (SELECT user_id FROM sys_user WHERE sys_user.dept_id in (SELECT dept_id FROM sys_dept WHERE dept_path LIKE ?))", info.DeptPath+"%")
+			case 4:
+				// 本人数据
+				return db.Where(tableName+".create_by = ?", info.UserId)
+			case 5:
+				// 自定义数据
+				return db.Where(tableName+".create_by IN (SELECT sys_user.user_id FROM sys_role_dept LEFT JOIN sys_user ON sys_user.dept_id = sys_role_dept.dept_id WHERE sys_role_dept.role_id = ?)", info.RoleId)
+			default:
+				return db
+			}
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package ctx
 
 import (
+	"bosh-admin/core/db"
 	"bosh-admin/model"
 )
 
@@ -34,6 +35,26 @@ func (c *Context) SetUserAuthInfo(info *model.SysUser) {
 func (c *Context) GetUserAuthInfo() *UserAuthInfo {
 	if info, exists := c.Get("userAuthInfo"); exists {
 		return info.(*UserAuthInfo)
+	} else {
+		return nil
+	}
+}
+
+func (c *Context) SetUserDataPerm(info *model.SysUser) {
+	userDataPerm := &db.DataPermission{
+		UserId:   info.Id,
+		RoleId:   info.RoleId,
+		RoleCode: info.Role.RoleCode,
+		DataPerm: info.Role.DataPerm,
+		DeptId:   info.DeptId,
+		DeptPath: info.Dept.DeptPath,
+	}
+	c.Set("userDataPerm", userDataPerm)
+}
+
+func (c *Context) GetUserDataPerm() *db.DataPermission {
+	if info, exists := c.Get("userDataPerm"); exists {
+		return info.(*db.DataPermission)
 	} else {
 		return nil
 	}

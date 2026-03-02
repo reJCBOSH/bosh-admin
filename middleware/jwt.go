@@ -51,6 +51,7 @@ func JWTApiAuth() gin.HandlerFunc {
 		}
 		// 将用户信息存储到上下文中，供后续使用
 		c.SetUserAuthInfo(userInfo)
+		c.SetUserDataPerm(userInfo)
 		// 鉴权通过，继续处理请求
 		c.Next()
 	})

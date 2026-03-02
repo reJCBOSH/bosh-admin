@@ -12,16 +12,6 @@ type BasicModel struct {
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`              // 删除时间
 }
 
-// PermissionModel 权限模型
-type PermissionModel struct {
-	CreatedBy uint   `gorm:"created_by" json:"-"` // 创建人id
-	Creator   string `gorm:"creator" json:"-"`    // 创建人
-	UpdatedBy uint   `gorm:"updated_by" json:"-"` // 更新人id
-	Updater   string `gorm:"updater" json:"-"`    // 更新人
-	DeletedBy uint   `gorm:"deleted_by" json:"-"` // 删除人id
-	Deleter   string `gorm:"deleter" json:"-"`    // 删除人
-}
-
 // AddBasicModel 新增基础模型
 type AddBasicModel struct {
 	CreatedAt CustomTime `gorm:"created_at" json:"createdAt"` // 创建时间
@@ -34,16 +24,29 @@ type EditBasicModel struct {
 	UpdatedAt CustomTime `gorm:"updated_at" json:"updatedAt" form:"updatedAt"`            // 更新时间
 }
 
-// AddPermissionModel 新增权限模型
-type AddPermissionModel struct {
-	CreatedBy uint   `gorm:"created_by" json:"-"` // 创建人id
-	Creator   string `gorm:"creator" json:"-"`    // 创建人
-	UpdatedBy uint   `gorm:"updated_by" json:"-"` // 更新人id
-	Updater   string `gorm:"updater" json:"-"`    // 更新人
+// DataPermission 数据权限
+type DataPermission struct {
+	UserId   uint   // 用户id
+	RoleId   uint   // 角色id
+	RoleCode string // 角色编码
+	DataPerm int    // 数据权限
+	DeptId   uint   // 部门id
+	DeptPath string // 部门路径
 }
 
-// EditPermissionModel 修改权限模型
-type EditPermissionModel struct {
-	UpdatedBy uint   `gorm:"updated_by" json:"-"`    // 更新人id
-	Updater   string `gorm:"updater" json:"updater"` // 更新人
+// PermissionModel 权限模型
+type PermissionModel struct {
+	CreatedBy uint `gorm:"created_by;default:0" json:"-"` // 创建人id
+	UpdatedBy uint `gorm:"updated_by;default:0" json:"-"` // 更新人id
+}
+
+// AddPermModel 新增权限模型
+type AddPermModel struct {
+	CreatedBy uint `gorm:"created_by" json:"-"` // 创建人id
+	UpdatedBy uint `gorm:"updated_by" json:"-"` // 更新人id
+}
+
+// EditPermModel 修改权限模型
+type EditPermModel struct {
+	UpdatedBy uint `gorm:"updated_by" json:"-"` // 更新人id
 }
