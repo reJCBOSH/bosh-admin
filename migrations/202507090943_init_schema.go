@@ -19,6 +19,8 @@ var InitSchema = &gormigrate.Migration{
 		err := tx.Migrator().AutoMigrate(
 			&model.Resource{},
 			&model.SysApi{},
+			&model.SysApp{},
+			&model.SysAppPerm{},
 			&model.SysBlackJwt{},
 			&model.SysDept{},
 			&model.SysLoginRecord{},
@@ -80,6 +82,7 @@ var InitSchema = &gormigrate.Migration{
 			{Path: "role", Name: "SystemRole", Component: "/system/role/index", ParentId: 1, Title: "角色管理", Icon: "ri:admin-line", KeepAlive: true},
 			{Path: "menu", Name: "SystemMenu", Component: "/system/menu/index", ParentId: 1, Title: "菜单管理", Icon: "ri:function-line", KeepAlive: true},
 			{Path: "dept", Name: "SystemDept", Component: "/system/dept/index", ParentId: 1, Title: "部门管理", Icon: "ri:git-branch-line", KeepAlive: true},
+			{Path: "userCenter", Name: "UserCenter", Component: "/system/userCenter/index", ParentId: 1, Title: "个人中心", IsHide: true},
 			{Path: "/monitor", Name: "Monitor", Component: "/index/index", ParentId: 0, Title: "系统监控", Icon: "ri:computer-line"},
 			{Path: "loginRecord", Name: "LoginRecord", Component: "/monitor/loginRecord/index", ParentId: 6, Title: "登录日志", Icon: "ri:window-line", KeepAlive: true},
 			{Path: "operationRecord", Name: "OperationRecord", Component: "/monitor/operationRecord/index", ParentId: 6, Title: "操作日志", Icon: "ri:history-line", KeepAlive: true},
@@ -123,6 +126,8 @@ var InitSchema = &gormigrate.Migration{
 		return tx.Migrator().DropTable(
 			&model.Resource{},
 			&model.SysApi{},
+			&model.SysApp{},
+			&model.SysAppPerm{},
 			&model.SysBlackJwt{},
 			&model.SysDept{},
 			&model.SysLoginRecord{},
